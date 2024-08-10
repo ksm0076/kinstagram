@@ -12,7 +12,7 @@ deactivate # 비활성화
 ```
 python manage.py runserver
 ```
-http://127.0.0.1:8000
+http://127.0.0.1:8000  
 127.0.0.1 로컬 호스트 : 자신을 의미
 
 8000 : 포트번호, 외부에서 들어오는 요청을 받아들임
@@ -31,6 +31,7 @@ cd kinsta
 python manage.py migrate
 ```
 
+<hr/>
 ### 3. html 파일 넣는 장소
 * 앱을 사용하지 않는 경우 (manage.py 파일이 있는 곳에 templates 폴더 생성)<br/>
 kinsta/templates/index.html
@@ -43,6 +44,7 @@ kinsta/main/templates/main/index.html
 
 > settings.py
 >> INSTALLED_APPS = [ 'main', ] 추가
+<hr/>
 
 ### 4. Django Rest Framework 설치
 ```
