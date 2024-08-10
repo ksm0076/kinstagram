@@ -52,7 +52,7 @@ TEMPLATES = [
 ```
 python manage.py startapp main
 ```
-> kinsta/main/templates/main/index.html
+> kinsta/main/templates/main/index.html  
 > settings.py
 
 ```
