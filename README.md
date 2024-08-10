@@ -40,7 +40,7 @@ python manage.py migrate
 
 ### 3. html 파일 넣는 장소
 * 앱을 사용하지 않는 경우 (manage.py 파일이 있는 곳에 templates 폴더 생성)<br/>
-> kinsta/templates/index.html 생성
+> kinsta/templates/index.html 생성  
 > kinsta/kinsta/settings.py
 ```
 TEMPLATES = [
@@ -54,7 +54,10 @@ python manage.py startapp main
 ```
 > kinsta/main/templates/main/index.html
 > settings.py
->> INSTALLED_APPS = [ 'main', ] 추가
+
+```
+INSTALLED_APPS = [ 'main', ] 추가
+```
 <hr/>
 
 ### 4. Django Rest Framework 설치
