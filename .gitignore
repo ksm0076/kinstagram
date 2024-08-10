@@ -1,1 +1,5 @@
+# 가상환경
 myenv/
+
+# Python
+__pycache__/
