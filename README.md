@@ -1,4 +1,4 @@
-### MVT 개념
+### *MVT 개념
 모델 : DB  
 템플릿 : 유저가 보는 화면  
 뷰 : 모델-템플릿 중계  
@@ -77,10 +77,13 @@ def index(request):
 urls.py -> views.py -> templates의 html 실행
 > kinsta/kinsta/urls.py
 ```
-from . import views # 현재 디렉토리에서 views를 import
+from .views import index, membership
+
 urlpatterns = [
-    path('', views.index, name='index'),, # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행
+    path('', index, name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행
+    path('membership/', membership, name='membership') # 127.0.0.1:8000/membership 호출하면 이 함수 실행
 ]
+
 ```
 
 
