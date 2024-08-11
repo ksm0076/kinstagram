@@ -22,6 +22,8 @@ http://127.0.0.1:8000
 8000 : 포트번호, 외부에서 들어오는 요청을 받아들임
 <hr/>
 
+#### MVT 구조 이해하기
+
 ### 1. 프로젝트 생성
 ```
 django-admin startproject kinsta
@@ -39,24 +41,12 @@ python manage.py migrate
 <hr/>
 
 ### 3. html 파일 넣는 장소
-* 앱을 사용하지 않는 경우 (manage.py 파일이 있는 곳에 templates 폴더 생성)<br/>
 > kinsta/templates/index.html 생성  
 > kinsta/kinsta/settings.py
 ```
 TEMPLATES = [
     'DIRS': [BASE_DIR / 'templates'], # 추가
 ] 
-```
-
-* 앱을 사용하는 경우
-```
-python manage.py startapp main
-```
-> kinsta/main/templates/main/index.html  
-> settings.py
-
-```
-INSTALLED_APPS = [ 'main', ] 추가
 ```
 <hr/>
 
@@ -65,13 +55,15 @@ INSTALLED_APPS = [ 'main', ] 추가
 pip install djangorestframework
 ```
 
-### 5. url 연결
+### 5. url 연결 (rest_framework 이용)
 > kinsta/kinsta/views.py 생성
 ```
 from django.shortcuts import render
+from rest_framework.views import APIView
 
-def index(request):
-    return render(request, 'index.html')
+class sub(APIView):
+    def get(self, request): # get 요청이 왔을 때
+        return render(request, "index.html")
 ```
 
 urls.py -> views.py -> templates의 html 실행
@@ -80,36 +72,16 @@ urls.py -> views.py -> templates의 html 실행
 from .views import index, membership
 
 urlpatterns = [
-    path('', index, name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행
-    path('membership/', membership, name='membership') # 127.0.0.1:8000/membership 호출하면 이 함수 실행
+    path('', sub.as_view(), name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행    
 ]
 
-```
-
-### 5. url 연결 (rest_framework 이용)
-> views.py
-```
-from django.shortcuts import render
-from rest_framework.views import APIView
-
-class sub(APIView):
-    def get(self, request):
-        return render(request, "index.html")
-```
-
-> urls.py
-```
-from .views import sub
-
-urlpatterns = [
-    path('', sub.as_view(), name='index'), # 추가
-]
 ```
 
 <details>
 <summary>현재까지의 파일 구조</summary>
 
 * kinsta
+  * (앱을 사용한다면 디렉토리가 위치할 곳)
   * db.sqlite3  
   * manage.py  
   * kinsta/  
@@ -119,6 +91,10 @@ urlpatterns = [
   * templates/  
       * html 파일들
 </details>
+
+<hr/>
+
+#### 피드화면 만들기
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
