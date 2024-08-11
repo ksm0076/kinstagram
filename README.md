@@ -77,9 +77,9 @@ def index(request):
 urls.py -> views.py -> templates의 html 실행
 > kinsta/kinsta/urls.py
 ```
-from view import index
+from . import views # 현재 디렉토리에서 views를 import
 urlpatterns = [
-    path('', index, name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행
+    path('', views.index, name='index'),, # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행
 ]
 ```
 
