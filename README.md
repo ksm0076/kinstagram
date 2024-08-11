@@ -69,11 +69,11 @@ pip install djangorestframework
 > kinsta/kinsta/views.py 생성
 ```
 from django.shortcuts import render
-from rest_framework.views import APIView
 
 def index(request):
     return render(request, 'index.html')
 ```
+
 urls.py -> views.py -> templates의 html 실행
 > kinsta/kinsta/urls.py
 ```
@@ -86,6 +86,39 @@ urlpatterns = [
 
 ```
 
+### 5. url 연결 (rest_framework 이용)
+> views.py
+```
+from django.shortcuts import render
+from rest_framework.views import APIView
+
+class sub(APIView):
+    def get(self, request):
+        return render(request, "index.html")
+```
+
+> urls.py
+```
+from .views import sub
+
+urlpatterns = [
+    path('', sub.as_view(), name='index'), # 추가
+]
+```
+
+<details>
+<summary>현재까지의 파일 구조</summary>
+
+* kinsta
+  * db.sqlite3  
+  * manage.py  
+  * kinsta/  
+      * settings.py  
+      * urls.py  
+      * views.py
+  * templates/  
+      * html 파일들
+</details>
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
