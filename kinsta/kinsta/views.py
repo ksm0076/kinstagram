@@ -11,3 +11,7 @@ class sub(APIView):
 class member(APIView):
     def get(self, request):
         return render(request, 'kinsta/membership.html')
+    
+class main(APIView):
+    def get(self, request):
+        return render(request, 'kinsta/main.html')

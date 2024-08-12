@@ -42,7 +42,7 @@ python manage.py migrate
 <hr/>
 
 ### 3. html 파일 넣는 장소
-> kinsta/templates/index.html 생성  
+> kinsta/templates/kinsta/index.html 생성  
 > kinsta/kinsta/settings.py
 ```
 TEMPLATES = [
@@ -99,12 +99,22 @@ urlpatterns = [
 
 <hr/>
 
-# 피드화면 만들기
+# 메인화면 만들기
 
 ### 6. content 앱 만들기
 ```
 python manage.py startapp content
 ```
+
+### 7. 부트스트랩 이용
+https://getbootstrap.kr/docs/5.3/getting-started/introduction/#%eb%b9%a0%eb%a5%b8-%ec%8b%9c%ec%9e%91
+웹 페이지의 아이콘, 버튼같은 것들이 디자인 되어있는 패키지
+빠른 시작 코드 붙여넣기 -> 부트스트랩 코드 사용 가능
+
+### 8. 상단 바 만들기
+부트스트랩에서 내비게이션 바(Navbar)
+https://getbootstrap.kr/docs/5.3/components/navbar/#%eb%82%b4%eb%b9%84%ea%b2%8c%ec%9d%b4%ec%85%98-%eb%b0%94
+'Hello, world!' 대신 붙여넣기
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
