@@ -129,5 +129,11 @@ https://fonts.google.com/icons
 css-flex  
 https://studiomeal.com/archives/197 참고  
 
+### 11. 하단 정렬
+display: flex = 가로로 배치
+justify-content: center = 가운데 정렬
+```
+<div style="display: flex; justify-content: center;">
+```
 <hr/>
 https://youtu.be/M8UPyeF5DfM
