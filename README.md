@@ -119,5 +119,12 @@ https://getbootstrap.kr/docs/5.3/components/navbar/#%eb%82%b4%eb%b9%84%ea%b2%8c%
 
 'Hello, world!' 대신 붙여넣기, 검색 기능도 넣기
 
+### 9. 구글 머티리얼 아이콘 사용
+https://fonts.google.com/icons
+
+가이드 잘 읽고 따라하기  
+홈, 탐색, 메시지, 알림, 만들기 아이콘 추가
+
+
 <hr/>
 https://youtu.be/M8UPyeF5DfM
