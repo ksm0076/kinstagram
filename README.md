@@ -125,6 +125,9 @@ https://fonts.google.com/icons
 가이드 잘 읽고 따라하기  
 홈, 탐색, 메시지, 알림, 만들기 아이콘 추가
 
+### 10. 상단 바 정렬하기
+css-flex  
+https://studiomeal.com/archives/197 참고  
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
