@@ -1,3 +1,4 @@
+# 장고를 이용한 인스타그램 클론 코딩
 ### *MVT 개념
 모델 : DB  
 템플릿 : 유저가 보는 화면  
@@ -61,7 +62,7 @@ pip install djangorestframework
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-class sub(APIView):
+class sub(APIView): # 클래스형 뷰
     def get(self, request): # get 요청이 왔을 때
         return render(request, "index.html")
 ```
