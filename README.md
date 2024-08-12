@@ -57,6 +57,10 @@ pip install djangorestframework
 ```
 
 ### 5. url 연결 (rest_framework 이용)
+#### 템플릿-뷰 과정
+1. templates에 html 생성
+2. views.py에 함수 등록
+3. urls.py에서 url에 따라 함수를 불러옴
 > kinsta/kinsta/views.py 생성
 ```
 from django.shortcuts import render
@@ -96,6 +100,11 @@ urlpatterns = [
 <hr/>
 
 # 피드화면 만들기
+
+### 6. content 앱 만들기
+```
+python manage.py startapp content
+```
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
