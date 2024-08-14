@@ -139,7 +139,8 @@ padding-top:55px = 상단 바와의 간격
 
 <details>
 <summary>margin과 padding의 차이</summary>
-margin : 외부에서 밀어주는 느낌  
+margin : 외부에서 밀어주는 느낌
+
 padding : 내부에서 미는 느낌
 </details>
 
