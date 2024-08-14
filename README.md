@@ -1,4 +1,4 @@
-# 장고를 이용한 인스타그램 클론 코딩
+# 장고를 이용한 인스타그램 클론 코딩, 간단한 CSS
 ### *MVT 개념
 모델 : DB  
 템플릿 : 유저가 보는 화면  
@@ -139,9 +139,9 @@ padding-top:55px = 상단 바와의 간격
 
 <details>
 <summary>margin과 padding의 차이</summary>
-margin : 외부에서 밀어주는 느낌
 
-padding : 내부에서 미는 느낌
+* margin : 외부에서 밀어주는 느낌
+* padding : 내부에서 미는 느낌
 </details>
 
 ```
@@ -155,7 +155,7 @@ padding : 내부에서 미는 느낌
 </div>
 ```
 
-### 12. 상단 바, 오른쪽 고정, 상단 바 페이지의 가로 꽉 채우기
+### 12. 상단 바 고정, 오른쪽 고정, 상단 바 페이지의 가로 꽉 채우기
 ```
 <div style="display: flex; justify-content: center; padding-top:54px;">
         <div style="width:600px; height: 1000px; background-color: yellowgreen; margin-right: 256px;">
@@ -165,6 +165,24 @@ padding : 내부에서 미는 느낌
             오른쪽
         </div>
     </div>
+```
+
+### 13. 피드 만들기
+<details>
+<summary>CSS 문법</summar>
+
+* overflow: hidden = 넘치는 부분은 감춤
+* object-fit: cover = 이미지 비율 유지
+* allign-items: center = 세로 기준으로 가운데 정렬
+</details>
+```
+ <!-- 사용자정보 -->
+    <div class="profile">
+        <div style="border-radius: 50%; overflow: hidden; width:100px; height:100px;">
+            <img class="profile_image" src=""
+            style="width:100%; height:100%; object-fit:cover;">
+    </div>
+</div>
 ```
 
 <hr/>

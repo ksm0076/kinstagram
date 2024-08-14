@@ -21,10 +21,51 @@
             font-weight: 400;
             font-style: normal;
         }
+        
+        .left_part{
+            width:600px;
+            height: 1000px;
+            background-color: white;
+            margin-right: 198px;
+        }
+
+        .right_part{
+            width:20%;
+            height: 1000px;
+            position:fixed;
+            left: 74%;
+            background-color: orange;
+        }
+
+        .profile{
+            display:flex;
+            align-items:center;
+        }
+
+        .profile_image{
+            border-radius: 50%;
+            /* overflow: hidden; */
+            width: 80px;
+            height: 80px;
+            object-fit: cover;            
+        }
+        
+        .user_id{
+            margin-left:10px;
+        }
+
+        .photo-section{
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .photo-section img{
+            width:50%;
+        }
     </style>
 </head>
 
-<body>
+<body style="background-color: rgb(211, 207, 207);">
     <!-- 상단바 -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed; width:100%;">
         <div class="container-fluid" style=" justify-content: space-between;">
@@ -49,16 +90,34 @@
         </div>
     </nav>
 
-    <!-- 왼쪽 피드, 오른쪽 추천 -->
+    <!-- 왼쪽 오른쪽 -->
     <div style="display: flex; justify-content: center; padding-top:54px;">
-        <div style="width:600px; height: 1000px; background-color: yellowgreen; margin-right: 256px;">
-            왼쪽
+        <!-- 왼쪽 피드 -->
+        <div class="left_part">
+            <div style="border: solid black; border-width:1px; border-color:grey;">
+                <!-- 사용자정보 -->
+                <div class="profile">
+                    <div>
+                        <img class="profile_image" src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                    </div>
+                    <div class="user_id">
+                        IU
+                    </div>
+                </div>
+                <!-- 사진 올리는 부분 -->
+                <div class="photo-section">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_xUOIqHHwYH3N11wWXnAf5WuRgMMf75p-KA&s">
+                </div>
+                <div>아이콘</div>
+                <div>댓글</div>
+            </div>
         </div>
-        <div style="width:400px; height: 1000px; background-color: orange; position:fixed; left: 62%;">
+        <!-- 오른쪽 추천 -->
+        <div class="right_part">
             오른쪽
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
