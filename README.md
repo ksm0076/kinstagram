@@ -127,13 +127,44 @@ https://fonts.google.com/icons
 
 ### 10. 상단 바 정렬하기
 css-flex  
+```
+<div class="container-fluid" style=" justify-content: space-between;">
+```
 https://studiomeal.com/archives/197 참고  
 
 ### 11. 하단 정렬
-display: flex = 가로로 배치
-justify-content: center = 가운데 정렬
+display: flex = 가로 방향으로 배치  
+justify-content: center = 가운데 정렬  
+padding-top:55px = 상단 바와의 간격
+
+<details>
+<summary>margin과 padding의 차이</summary>
+margin : 외부에서 밀어주는 느낌
+padding : 내부에서 미는 느낌
+</details>
+
 ```
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center; padding-top:55px;">
+    <div>
+        왼쪽
+    </div>
+    <div>
+        오른쪽
+    </div>
+</div>
 ```
+
+### 12. 상단 바, 오른쪽 고정, 상단 바 페이지의 가로 꽉 채우기
+```
+<div style="display: flex; justify-content: center; padding-top:54px;">
+        <div style="width:600px; height: 1000px; background-color: yellowgreen; margin-right: 256px;">
+            왼쪽
+        </div>
+        <div style="width:400px; height: 1000px; background-color: orange; position:fixed; left: 62%;">
+            오른쪽
+        </div>
+    </div>
+```
+
 <hr/>
 https://youtu.be/M8UPyeF5DfM
