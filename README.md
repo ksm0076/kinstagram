@@ -175,15 +175,12 @@ padding-top:55px = 상단 바와의 간격
 * object-fit: cover = 이미지 비율 유지
 * allign-items: center = 세로 기준으로 가운데 정렬
 </details>
-```
- <!-- 사용자정보 -->
-    <div class="profile">
-        <div style="border-radius: 50%; overflow: hidden; width:100px; height:100px;">
-            <img class="profile_image" src=""
-            style="width:100%; height:100%; object-fit:cover;">
-    </div>
-</div>
-```
+
+1. 사용자 정보
+2. 사진 부분
+3. 아이콘
+4. 댓글 부분
+
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
