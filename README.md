@@ -68,6 +68,12 @@ class sub(APIView): # 클래스형 뷰
         return render(request, "index.html")
 ```
 
+```
+# rest_framework 사용 안한 기본 형태
+def index(request):
+    return render(request, 'index.html')
+```
+
 urls.py -> views.py -> templates의 html 실행
 > kinsta/kinsta/urls.py
 ```
@@ -77,13 +83,15 @@ urlpatterns = [
     path('', sub.as_view(), name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행    
 ]
 ```
+<details>
+<summary> **5.1 앱 만들고 url 연결** </summary>
 
-### 5.1 앱 만들고 url 연결
-## 1. 앱 생성
-## 2. templates 생성
-## 3. view 함수 등록
-## 4. 앱의 url 설정
-## 5. 프로젝트 url에서 앱 연결
+**1. 앱 생성**  
+**2. templates 생성**  
+**3. view 함수 등록**  
+**4. 앱의 url 설정**  
+**5. 프로젝트 url에서 앱 연결**  
+
 
 1. 앱 생성
 ```
@@ -116,21 +124,26 @@ urlpatterns = [
     path('content/', include('content.urls')) # 추가
 ]
 ```
-
+</details>
 
 <details>
 <summary>현재까지의 파일 구조</summary>
 
 * kinsta
-  * (앱을 사용한다면 디렉토리가 위치할 곳)
   * db.sqlite3  
   * manage.py  
   * kinsta/  
-      * settings.py  
-      * urls.py  
-      * views.py
+    * settings.py  
+    * urls.py  
+    * views.py
+  * content/ (앱)
+    * urls.py
+    * views.py
   * templates/  
-      * html 파일들
+    * kinsta
+      * main.html
+    * content
+      * test.html
 </details>
 
 <hr/>
