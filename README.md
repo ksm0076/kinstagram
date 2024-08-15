@@ -76,8 +76,47 @@ from .views import index, membership
 urlpatterns = [
     path('', sub.as_view(), name='index'), # 추가, 127.0.0.1:8000/'' 호출하면 이 함수 실행    
 ]
-
 ```
+
+### 5.1 앱 만들고 url 연결
+## 1. 앱 생성
+## 2. templates 생성
+## 3. view 함수 등록
+## 4. 앱의 url 설정
+## 5. 프로젝트 url에서 앱 연결
+
+1. 앱 생성
+```
+python manage.py startapp content
+```
+
+2. 앱에 대한 html 담을 폴더 생성 (kinsta/templates/kinsta 폴더가 있는 곳)
+> kinsta/templates/content 생성
+
+3. views.py에 함수 등록
+> kinsta/content/views.py
+```
+class test(APIView):
+    def get(self, request):
+        return render(request, 'content/test.html') # templates/content/test.html 불러옴
+```
+
+4. urls.py에서 함수를 불러옴
+> kinsta/content/urls.py 생성
+```
+urlpatterns = [
+    path('test', test.as_view(), name='test'), # http://localhost:8000/content/test 경로로 접근
+]
+```
+
+5. kinsta의 urls에서 앱의 url 연결
+> kinsta/kinsta/urls.py
+```
+urlpatterns = [
+    path('content/', include('content.urls')) # 추가
+]
+```
+
 
 <details>
 <summary>현재까지의 파일 구조</summary>
