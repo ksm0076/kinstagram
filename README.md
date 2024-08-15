@@ -39,8 +39,6 @@ cd kinsta
 python manage.py migrate
 ```
 
-<hr/>
-
 ### 3. html 파일 넣는 장소
 > kinsta/templates/kinsta/index.html 생성  
 > kinsta/kinsta/settings.py
@@ -49,7 +47,6 @@ TEMPLATES = [
     'DIRS': [BASE_DIR / 'templates'], # 추가
 ] 
 ```
-<hr/>
 
 ### 4. Django Rest Framework 설치
 ```
@@ -169,7 +166,7 @@ padding-top:55px = 상단 바와의 간격
 
 ### 13. 피드 만들기
 <details>
-<summary>CSS 문법</summar>
+<summary>CSS 문법</summary>
 
 * overflow: hidden = 넘치는 부분은 감춤
 * object-fit: cover = 이미지 비율 유지
@@ -180,7 +177,6 @@ padding-top:55px = 상단 바와의 간격
 2. 사진 부분
 3. 아이콘
 4. 댓글 부분
-
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
