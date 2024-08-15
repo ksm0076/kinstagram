@@ -21,59 +21,63 @@
             font-weight: 400;
             font-style: normal;
         }
-        
-        body{
+
+        body {
             background-color: rgb(211, 207, 207);
         }
 
-        .left_part{
-            width:500px;
+        .fill_icon {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .left_part {
+            width: 400px;
             height: 2000px;
             background-color: white;
-            margin-right: 198px;
         }
 
-        .right_part{
-            width:20%;
+        .right_part {
+            width: 20%;
             height: 2000px;
-            position:fixed;
+            position: fixed;
             left: 74%;
             background-color: orange;
+            margin-left: 10px;
         }
 
-        .feed{
+        .feed {
             border: solid black;
-            border-width:1px;
-            border-color:grey;
+            border-width: 1px;
+            border-color: grey;
         }
 
-        .profile{
-            display:flex;
-            align-items:center;
+        .profile {
+            display: flex;
+            align-items: center;
         }
 
-        .profile_image{
-            margin-left:10px;
-            margin-top:5px;
-            margin-bottom:5px;
+        .profile_image {
+            margin-left: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
             border-radius: 50%;
             /* overflow: hidden; */
             width: 60px;
             height: 60px;
-            object-fit: cover;            
+            object-fit: cover;
         }
-        
-        .user_id{
-            margin-left:10px;
+
+        .user_id {
+            margin-left: 10px;
             font-weight: bold;
         }
 
-        .photo_section{
+        .photo_section {
             text-align: center;
         }
 
-        .photo_section img{
-            width:100%;
+        .photo_section img {
+            width: 100%;
             height: auto;
         }
     </style>
@@ -95,7 +99,7 @@
             </div>
             <!-- 아이콘 -->
             <div>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1"> home </span>
+                <span class="material-symbols-outlined fill_icon"> home </span>
                 <span class="material-symbols-outlined"> send </span>
                 <span class="material-symbols-outlined"> explore </span>
                 <span class="material-symbols-outlined"> favorite </span>
@@ -112,7 +116,8 @@
                 <!-- 사용자정보 -->
                 <div class="profile">
                     <div>
-                        <img class="profile_image" src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                        <img class="profile_image"
+                            src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
                     </div>
                     <div class="user_id">
                         IU
@@ -120,9 +125,14 @@
                 </div>
                 <!-- 사진 올리는 부분 -->
                 <div class="photo_section">
-                    <img src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
+                    <img
+                        src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
                 </div>
-                <div>아이콘</div>
+                <div style="margin-top:5px;">
+                    <span class="material-symbols-outlined">favorite</span>
+                    <span class="material-symbols-outlined">chat_bubble</span>
+                    <span class="material-symbols-outlined"> send </span>
+                </div>
                 <div>댓글</div>
             </div>
         </div>
