@@ -6,7 +6,7 @@
 }
 
 body {
-    /* background-color: rgb(211, 207, 207); */
+    background-color: rgb(211, 207, 207);
 }
 
 .fill_icon {
@@ -20,33 +20,33 @@ body {
 }
 
 .right_part {
-    width: 300px;
+    width: 20%;
     height: 2000px;
     position: fixed;
     left: 74%;
+    background-color: orange;
     margin-left: 10px;
-    padding: 10px;
 }
 
 .feed {
-    /* border: solid black; */
-    /* border-width: 1px; */
-    /* border-color: grey; */
-    padding-top:5px;
+    border: solid black;
+    border-width: 1px;
+    border-color: grey;
 }
 
 .profile_section {
     display: flex;
     align-items: center;
-    margin-left:5px;
-    margin-bottom:5px;
 }
 
 .profile_image {
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border-radius: 50%;
     /* overflow: hidden; */
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
 }
 
@@ -67,13 +67,4 @@ body {
 .icon_section {
     display: flex;
     justify-content: space-between;
-    margin-top:5px;
-    margin-left:4px;
-    margin-right:4px;
-}
-
-.profile_summary{
-    display:flex;
-    align-items:center;
-    margin-bottom : 13px;
 }

@@ -15,7 +15,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css"/>
+    <!-- {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
+    <link rel="stylesheet" href="css\styles.css">
 </head>
 
 <body>
@@ -64,7 +66,7 @@
                         src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
                 </div>
                 <!-- 아이콘 부분 -->
-                <div class="icon_section" style="margin-top:5px;">
+                <div class="icon_section">
                     <div>
                         <span class="material-symbols-outlined">favorite</span>
                         <span class="material-symbols-outlined">chat_bubble</span>
@@ -74,24 +76,122 @@
                         <span class="material-symbols-outlined"> bookmark </span>
                     </div>
                 </div>
-                <!-- 좋아요 수 -->
-                 <div>
-                    좋아요 198.3만개
-                 </div>
-                 <div>
-                    작성자의 말
-                 </div>
-                <div>
-                    댓글
+                <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
+                    <!-- 좋아요 수 -->
+                    <div>
+                        <b>좋아요 198.3만개</b>
+                    </div>
+                    <!-- 작성자, 작성자의 말 -->
+                    <div style="display:flex;">
+                        <div>
+                            <b>dlwlrma</b>
+                        </div>
+                        <div style="margin-left:5px;">
+                            안녕
+                        </div>
+                    </div>
+                    <!-- 댓글 -->
+                    <div style="color:rgb(131, 131, 127)">
+                        댓글 5258개 모두 보기
+                    </div>
+                    <!-- 댓글 입력창 -->
+                    <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
+                        <input type="email" class="form-control" placeholder="댓글 달기..."
+                            style="box-shadow:none; font-size:14px; border:none">
+                    </div>
                 </div>
-                <div>
-                    댓글 입력창
+                <hr>
+            </div>
+            <div class="feed">
+                <!-- 사용자정보 -->
+                <div class="profile_section">
+                    <div>
+                        <img class="profile_image"
+                            src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                    </div>
+                    <div class="user_id">
+                        IU
+                    </div>
                 </div>
+                <!-- 사진 올리는 부분 -->
+                <div class="photo_section">
+                    <img
+                        src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
+                </div>
+                <!-- 아이콘 부분 -->
+                <div class="icon_section">
+                    <div>
+                        <span class="material-symbols-outlined">favorite</span>
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span class="material-symbols-outlined"> send </span>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined"> bookmark </span>
+                    </div>
+                </div>
+                <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
+                    <!-- 좋아요 수 -->
+                    <div>
+                        <b>좋아요 198.3만개</b>
+                    </div>
+                    <!-- 작성자, 작성자의 말 -->
+                    <div style="display:flex;">
+                        <div>
+                            <b>dlwlrma</b>
+                        </div>
+                        <div style="margin-left:5px;">
+                            안녕
+                        </div>
+                    </div>
+                    <!-- 댓글 -->
+                    <div style="color:rgb(131, 131, 127)">
+                        댓글 5258개 모두 보기
+                    </div>
+                    <!-- 댓글 입력창 -->
+                    <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
+                        <input type="email" class="form-control" placeholder="댓글 달기..."
+                            style="box-shadow:none; font-size:14px; border:none">
+                    </div>
+                </div>
+                <hr>
             </div>
         </div>
         <!-- 오른쪽(추천) -->
         <div class="right_part">
-            오른쪽
+            <!-- 내 정보 -->
+            <div class="profile_summary">
+                <img class="profile_image"
+                    src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                <div style="margin-left:10px; flex-direction: column; font-size:13px;">
+                    <div><b>ksm1236</b></div>
+                    <div>aaaa</div>
+                </div>
+            </div>
+            <hr>
+            <!-- 친구 목록 -->
+            <div>
+                <div class="profile_summary">
+                    <img class="profile_image"
+                        src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
+                    <div style="margin-left:10px; flex-direction: column; font-size:13px;">
+                        <div><b>bbb123</b></div>
+                        <div>bbbb</div>
+                    </div>
+                </div>
+                <div class="profile_summary">
+                    <img class="profile_image"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1nZ72jgQ2DriWZBGeEl2BH5Qy0tPAdcFbEw&s">
+                    <div style="margin-left:10px; flex-direction: column; font-size:13px;">
+                        <div><b>cccc123</b></div>
+                        <div>cccc</div>
+                    </div>
+                </div>
+            </div>
+            <div style="color:rgb(117, 111, 111); font-size:14px; padding-top:25px;">
+                소개. 도움말. 홍보 센터. API. 채용 정보. 
+                개인정보처리방침. 약관. 위치. 언어. <br><br>
+                © 2024 Instagram from Meta
+            </div>
         </div>
     </div>
 
