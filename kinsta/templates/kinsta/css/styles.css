@@ -1,0 +1,70 @@
+
+.lobster-regular {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background-color: rgb(211, 207, 207);
+}
+
+.fill_icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+.left_part {
+    width: 400px;
+    height: 2000px;
+    background-color: white;
+}
+
+.right_part {
+    width: 20%;
+    height: 2000px;
+    position: fixed;
+    left: 74%;
+    background-color: orange;
+    margin-left: 10px;
+}
+
+.feed {
+    border: solid black;
+    border-width: 1px;
+    border-color: grey;
+}
+
+.profile_section {
+    display: flex;
+    align-items: center;
+}
+
+.profile_image {
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 50%;
+    /* overflow: hidden; */
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.user_id {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.photo_section {
+    text-align: center;
+}
+
+.photo_section img {
+    width: 100%;
+    height: auto;
+}
+
+.icon_section {
+    display: flex;
+    justify-content: space-between;
+}

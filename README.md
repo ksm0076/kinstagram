@@ -179,7 +179,7 @@ css-flex
 ```
 <div class="container-fluid" style=" justify-content: space-between;">
 ```
-https://studiomeal.com/archives/197 참고  
+[css-flex 익히기](https://studiomeal.com/archives/197) 참고  
 
 ### 11. 하단 정렬
 display: flex = 가로 방향으로 배치  

@@ -15,72 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <style>
-        .lobster-regular {
-            font-family: "Lobster", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-
-        body {
-            background-color: rgb(211, 207, 207);
-        }
-
-        .fill_icon {
-            font-variation-settings: 'FILL' 1;
-        }
-
-        .left_part {
-            width: 400px;
-            height: 2000px;
-            background-color: white;
-        }
-
-        .right_part {
-            width: 20%;
-            height: 2000px;
-            position: fixed;
-            left: 74%;
-            background-color: orange;
-            margin-left: 10px;
-        }
-
-        .feed {
-            border: solid black;
-            border-width: 1px;
-            border-color: grey;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-        }
-
-        .profile_image {
-            margin-left: 10px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            border-radius: 50%;
-            /* overflow: hidden; */
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-        }
-
-        .user_id {
-            margin-left: 10px;
-            font-weight: bold;
-        }
-
-        .photo_section {
-            text-align: center;
-        }
-
-        .photo_section img {
-            width: 100%;
-            height: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css"/>
 </head>
 
 <body>
@@ -114,7 +49,7 @@
         <div class="left_part">
             <div class="feed">
                 <!-- 사용자정보 -->
-                <div class="profile">
+                <div class="profile_section">
                     <div>
                         <img class="profile_image"
                             src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
@@ -128,12 +63,30 @@
                     <img
                         src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
                 </div>
-                <div style="margin-top:5px;">
-                    <span class="material-symbols-outlined">favorite</span>
-                    <span class="material-symbols-outlined">chat_bubble</span>
-                    <span class="material-symbols-outlined"> send </span>
+                <!-- 아이콘 부분 -->
+                <div class="icon_section" style="margin-top:5px;">
+                    <div>
+                        <span class="material-symbols-outlined">favorite</span>
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span class="material-symbols-outlined"> send </span>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined"> bookmark </span>
+                    </div>
                 </div>
-                <div>댓글</div>
+                <!-- 좋아요 수 -->
+                 <div>
+                    좋아요 198.3만개
+                 </div>
+                 <div>
+                    작성자의 말
+                 </div>
+                <div>
+                    댓글
+                </div>
+                <div>
+                    댓글 입력창
+                </div>
             </div>
         </div>
         <!-- 오른쪽(추천) -->
