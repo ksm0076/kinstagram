@@ -1,5 +1,6 @@
-# 장고를 이용한 인스타그램 클론 코딩, 간단한 CSS
-### *MVT 개념
+# 장고를 이용한 인스타그램 클론 코딩 (CSS, DB 연결)
+
+### *MVT 구조
 모델 : DB  
 템플릿 : 유저가 보는 화면  
 뷰 : 모델-템플릿 중계  
@@ -148,40 +149,25 @@ urlpatterns = [
 
 <hr/>
 
-# 메인화면 만들기
 
-### 6. content 앱 만들기
-```
-python manage.py startapp content
-```
+<details>
+<summary>메인화면 만들기</summary>
 
-### 7. 부트스트랩 이용
+### 부트스트랩 이용
 > 웹 페이지의 아이콘, 버튼같은 것들이 디자인 되어있는 패키지
 
 https://getbootstrap.kr/docs/5.3/getting-started/introduction/#%eb%b9%a0%eb%a5%b8-%ec%8b%9c%ec%9e%91
 
 빠른 시작 코드 붙여넣기 -> 부트스트랩 코드 사용 가능
 
-### 8. 상단 바 만들기
-부트스트랩에서 내비게이션 바(Navbar)
-https://getbootstrap.kr/docs/5.3/components/navbar/#%eb%82%b4%eb%b9%84%ea%b2%8c%ec%9d%b4%ec%85%98-%eb%b0%94
-
-'Hello, world!' 대신 붙여넣기, 검색 기능도 넣기
-
-### 9. 구글 머티리얼 아이콘 사용
+### 구글 머티리얼 아이콘 사용
 https://fonts.google.com/icons
 
-가이드 잘 읽고 따라하기  
-홈, 탐색, 메시지, 알림, 만들기 아이콘 추가
+### [css-flex 익히기](https://studiomeal.com/archives/197)
 
-### 10. 상단 바 정렬하기
-css-flex  
-```
-<div class="container-fluid" style=" justify-content: space-between;">
-```
-[css-flex 익히기](https://studiomeal.com/archives/197) 참고  
+### 6. 상단 바 만들기
 
-### 11. 하단 정렬
+### 7. 하단 정렬
 display: flex = 가로 방향으로 배치  
 justify-content: center = 가운데 정렬  
 padding-top:55px = 상단 바와의 간격
@@ -193,42 +179,24 @@ padding-top:55px = 상단 바와의 간격
 * padding : 내부에서 미는 느낌
 </details>
 
-```
-<div style="display: flex; justify-content: center; padding-top:55px;">
-    <div>
-        왼쪽
-    </div>
-    <div>
-        오른쪽
-    </div>
-</div>
-```
 
-### 12. 상단 바 고정, 오른쪽 고정, 상단 바 페이지의 가로 꽉 채우기
-```
-<div style="display: flex; justify-content: center; padding-top:54px;">
-        <div style="width:600px; height: 1000px; background-color: yellowgreen; margin-right: 256px;">
-            왼쪽
-        </div>
-        <div style="width:400px; height: 1000px; background-color: orange; position:fixed; left: 62%;">
-            오른쪽
-        </div>
-    </div>
-```
+### 8. 상단 바 고정, 오른쪽 고정, 상단 바 페이지의 가로 꽉 채우기
 
-### 13. 피드 만들기
-<details>
-<summary>CSS 문법</summary>
-
-* overflow: hidden = 넘치는 부분은 감춤
-* object-fit: cover = 이미지 비율 유지
-* allign-items: center = 세로 기준으로 가운데 정렬
-</details>
+### 9. 좌측 피드 만들기
 
 1. 사용자 정보
 2. 사진 부분
 3. 아이콘
 4. 댓글 부분
+
+### 10. 우측 추천 목록 만들기
+</details>
+<hr/>
+
+# 모델 구조 (DB연결, ORM)
+ORM : Object Relational Mapping
+
+객체-DB 매핑, SQL을 사용하지 않고도 DB 작업 수행 가능
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
