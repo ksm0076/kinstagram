@@ -10,7 +10,7 @@ class test(APIView):
     
 class main(APIView):
     def get(self, request):
-        feed_list = Feed.objects.all() # select * from content_feed
+        feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
         
         for f in feed_list:
             print(f.content)

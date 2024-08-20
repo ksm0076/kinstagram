@@ -55,16 +55,16 @@
                 <div class="profile_section">
                     <div>
                         <img class="profile_image"
-                            src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                            src="{{feed.profile_image}}">
                     </div>
                     <div class="user_id">
-                        IU
+                        {{feed.user_id}}
                     </div>
                 </div>
                 <!-- 사진 올리는 부분 -->
                 <div class="photo_section">
                     <img
-                        src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
+                        src="{{feed.image}}">
                 </div>
                 <!-- 아이콘 부분 -->
                 <div class="icon_section">
@@ -80,15 +80,15 @@
                 <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
                     <!-- 좋아요 수 -->
                     <div>
-                        <b>좋아요 198.3만개</b>
+                        <b>좋아요 {{feed.like_count}}개</b>
                     </div>
                     <!-- 작성자, 작성자의 말 -->
                     <div style="display:flex;">
                         <div>
-                            <b>dlwlrma</b>
+                            <b>{{feed.user_id}}</b>
                         </div>
                         <div style="margin-left:5px;">
-                            안녕
+                            {{feed.content}}
                         </div>
                     </div>
                     <!-- 댓글 -->

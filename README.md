@@ -254,7 +254,7 @@ class main(APIView):
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(request, 'kinsta/main.html', context=dict(feed_list=feed_list))
 ```
-### 15. main.html에 python 코드 넣기
+### 15. main.html에 템플릿 언어 사용
 ```
 {% for feed in feeds%}            
     <div>{{feed.content}}</div>            
