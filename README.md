@@ -200,20 +200,63 @@ ORM : Object Relational Mapping
 
 ### 11. 피드에 대한 필드 파악
 #### 피드
-|ID|프사|작성자이름|올린사진|글내용|좋아요수|댓글|
-|----|----|----|----|----|----|----|
+|**ID**|**프로필사진**|**작성자이름**|**올린사진**|**글내용**|좋아요수|댓글|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |o|o|o|o|o|-> 참조|-> 참조|
 
 #### 댓글
-|피드_ID|댓글작성자|댓글내용|
-|-|-|-|
+|**피드_ID**|**댓글작성자**|**댓글내용**|
+|:-:|:-:|:-:|
 |o|o|o|
 
 ### 좋아요
-|피드_ID|좋아요한사람|좋아요여부|
-|-|-|-|
+|**피드_ID**|**좋아요한사람**|**좋아요여부**|
+|:-:|:-:|:-:|
 |o|o|o|
+
 (좋아요 여부는 취소 기능을 위함)
+
+### 12. 모델 작성
+> kinsta/content/models.py
+```
+class Feed(models.Model):
+    profile_image = models.TextField() # 프로필사진
+    user_id = models.TextField() # 작성자이름
+    image = models.TextField() # 올린사진
+    content = models.TextField() # 글내용
+    like_count = models.IntegerField() # 좋아요수
+```
+
+### 13. migration 작업
+모델 기록
+```
+python manage.py makemigrations
+```
+DB에 적용
+```
+python manage.py migrate
+```
+
+[SQLite Tool](https://sqlitestudio.pl/)
+
+### 14. DB 불러와서 웹페이지에 표시하기
+> kinsta/content/views.py
+```
+from .models import Feed
+
+class main(APIView):
+    def get(self, request):
+        feed_list = Feed.objects.all() # select * from content_feed
+        
+        for f in feed_list:
+            print(f.content) # 피드의 내용을 볼 수 있음
+        
+        # 사전 형식으로 전달
+        return render(request, 'kinsta/main.html', context=dict(feed_list=feed_list))
+```
+
+
+
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
