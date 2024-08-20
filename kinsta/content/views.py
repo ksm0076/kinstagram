@@ -5,4 +5,4 @@ from rest_framework.views import APIView
     
 class test(APIView):
     def get(self, request):
-        return render(request, 'content/test.html')
+        return render(request, 'content/test.html') # html 파일 위치

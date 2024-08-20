@@ -66,7 +66,7 @@ from rest_framework.views import APIView
 
 class sub(APIView): # 클래스형 뷰
     def get(self, request): # get 요청이 왔을 때
-        return render(request, "index.html")
+        return render(request, "index.html") # html 파일 위치
 ```
 
 ```
@@ -197,6 +197,23 @@ padding-top:55px = 상단 바와의 간격
 ORM : Object Relational Mapping
 
 객체-DB 매핑, SQL을 사용하지 않고도 DB 작업 수행 가능
+
+### 11. 피드에 대한 필드 파악
+#### 피드
+|ID|프사|작성자이름|올린사진|글내용|좋아요수|댓글|
+|----|----|----|----|----|----|----|
+|o|o|o|o|o|-> 참조|-> 참조|
+
+#### 댓글
+|피드_ID|댓글작성자|댓글내용|
+|-|-|-|
+|o|o|o|
+
+### 좋아요
+|피드_ID|좋아요한사람|좋아요여부|
+|-|-|-|
+|o|o|o|
+(좋아요 여부는 취소 기능을 위함)
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
