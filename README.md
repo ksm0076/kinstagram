@@ -209,7 +209,7 @@ ORM : Object Relational Mapping
 |:-:|:-:|:-:|
 |o|o|o|
 
-### 좋아요
+#### 좋아요
 |**피드_ID**|**좋아요한사람**|**좋아요여부**|
 |:-:|:-:|:-:|
 |o|o|o|
@@ -228,7 +228,7 @@ class Feed(models.Model):
 ```
 
 ### 13. migration 작업
-모델 기록
+모델 변경사항 기록
 ```
 python manage.py makemigrations
 ```
@@ -239,7 +239,7 @@ python manage.py migrate
 
 [SQLite Tool](https://sqlitestudio.pl/)
 
-### 14. DB 불러와서 웹페이지에 표시하기
+### 14. view에서 DB 불러오고 html(템플릿)에 전달(렌더링)
 > kinsta/content/views.py
 ```
 from .models import Feed
@@ -251,11 +251,15 @@ class main(APIView):
         for f in feed_list:
             print(f.content) # 피드의 내용을 볼 수 있음
         
-        # 사전 형식으로 전달
+        # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(request, 'kinsta/main.html', context=dict(feed_list=feed_list))
 ```
-
-
+### 15. main.html에 python 코드 넣기
+```
+{% for feed in feeds%}            
+    <div>{{feed.content}}</div>            
+{% endfor%}
+```
 
 
 <hr/>

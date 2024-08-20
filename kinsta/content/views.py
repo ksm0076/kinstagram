@@ -15,4 +15,5 @@ class main(APIView):
         for f in feed_list:
             print(f.content)
         
-        return render(request, 'kinsta/main.html', context=dict(feed_list=feed_list))
+        # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
+        return render(request, 'kinsta/main.html', context=dict(feeds=feed_list))

@@ -43,12 +43,13 @@
                 <span class="material-symbols-outlined" style="font-size:30px;"> add_box </span>
             </div>
         </div>
-    </nav>
-
+    </nav>    
     <!-- 왼쪽 오른쪽 -->
     <div style="display: flex; justify-content: center; padding-top:65px;">
+        
         <!-- 왼쪽(피드) -->
         <div class="left_part">
+            {% for feed in feeds %}
             <div class="feed">
                 <!-- 사용자정보 -->
                 <div class="profile_section">
@@ -102,59 +103,8 @@
                 </div>
                 <hr>
             </div>
-            <div class="feed">
-                <!-- 사용자정보 -->
-                <div class="profile_section">
-                    <div>
-                        <img class="profile_image"
-                            src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
-                    </div>
-                    <div class="user_id">
-                        IU
-                    </div>
-                </div>
-                <!-- 사진 올리는 부분 -->
-                <div class="photo_section">
-                    <img
-                        src="https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/06/28/612b6ff6-5081-4b54-a22c-38d716229c41.jpg">
-                </div>
-                <!-- 아이콘 부분 -->
-                <div class="icon_section">
-                    <div>
-                        <span class="material-symbols-outlined">favorite</span>
-                        <span class="material-symbols-outlined">chat_bubble</span>
-                        <span class="material-symbols-outlined"> send </span>
-                    </div>
-                    <div>
-                        <span class="material-symbols-outlined"> bookmark </span>
-                    </div>
-                </div>
-                <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
-                    <!-- 좋아요 수 -->
-                    <div>
-                        <b>좋아요 198.3만개</b>
-                    </div>
-                    <!-- 작성자, 작성자의 말 -->
-                    <div style="display:flex;">
-                        <div>
-                            <b>dlwlrma</b>
-                        </div>
-                        <div style="margin-left:5px;">
-                            안녕
-                        </div>
-                    </div>
-                    <!-- 댓글 -->
-                    <div style="color:rgb(131, 131, 127)">
-                        댓글 5258개 모두 보기
-                    </div>
-                    <!-- 댓글 입력창 -->
-                    <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
-                        <input type="email" class="form-control" placeholder="댓글 달기..."
-                            style="box-shadow:none; font-size:14px; border:none">
-                    </div>
-                </div>
-                <hr>
-            </div>
+            {%endfor%}
+            
         </div>
         <!-- 오른쪽(추천) -->
         <div class="right_part">
@@ -173,7 +123,7 @@
                     </div>
                 </div>
                 <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                    <a href="" class="link_style" >전환</a>
+                    <a href="" class="link_style">전환</a>
                 </div>
             </div>
             <hr>
@@ -202,7 +152,7 @@
                         </div>
                     </div>
                     <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                        <a href="" class="link_style" >팔로우</a>
+                        <a href="" class="link_style">팔로우</a>
                     </div>
                 </div>
                 <div style="display:flex; justify-content: space-between;">
@@ -219,7 +169,7 @@
                         </div>
                     </div>
                     <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                        <a href="" class="link_style" >팔로우</a>
+                        <a href="" class="link_style">팔로우</a>
                     </div>
                 </div>
             </div>
