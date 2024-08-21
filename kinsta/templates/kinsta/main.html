@@ -41,12 +41,12 @@
                 </form>
             </div>
             <!-- 아이콘 -->
-            <div>
+            <div style="cursor:pointer;">
                 <span class="material-symbols-outlined fill_icon" style="font-size:30px;"> home </span>
                 <span class="material-symbols-outlined" style="font-size:30px;"> send </span>
                 <span class="material-symbols-outlined" style="font-size:30px;"> explore </span>
                 <span class="material-symbols-outlined" style="font-size:30px;"> favorite </span>
-                <span id="nav_add_box" class="material-symbols-outlined" style="font-size:30px; cursor:pointer;"> add_box </span>
+                <span id="nav_add_box" class="material-symbols-outlined" style="font-size:30px;"> add_box </span>
             </div>
         </div>
     </nav>
@@ -187,17 +187,35 @@
 
     <!-- 게시물 추가 기능 -->
     <div class="modal_overlay">
-        <div class="modal_window">
-            <button>asdf</button>
+        <div style="display: flex; flex-direction: row-reverse;
+        padding-right:40px; padding-top:40px; padding-bottom:30px;">
+            <button id="modal_X" style="background-color:transparent;
+            color:white; border-color:transparent;
+            font-size:30px;">X</button>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <div class="modal_window">
+                <button>asdf</button>
+            </div>
         </div>
     </div>
     <script>
         $('#nav_add_box').click(function () {
+            // modal 띄우기
             $('.modal_overlay').css({
-                display: 'flex',
+                display: 'block',
             })
+            // 스크롤 없애기
             $(document.body).css({
                 overflow: 'hidden',
+            })
+        })
+        $('#modal_X').click(function(){
+            $('.modal_overlay').css({
+                display: 'none',
+            })
+            $(document.body).css({
+                overflow: 'scroll',
             })
         })
     </script>
