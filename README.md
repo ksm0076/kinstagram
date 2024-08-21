@@ -261,6 +261,36 @@ class main(APIView):
 {% endfor%}
 ```
 
+### 16. 게시물 추가 기능 (모달 창 만들기, JS, JQuery)
+#### 2. 모달 코드 작성
+
+#### 1. JQuery 사용하기 위해 추가
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+```
+
+#### 2. 게시글 추가 아이콘에 클릭 기능 추가 (id를 넣어줌)
+> kinsta/templates/kinsta/main.html
+```
+<span id="nav_add_box" class="material-symbols-outlined" style="font-size:30px; cursor:pointer;"> add_box </span>
+```
+
+#### 3. 아이콘 클릭 시 작동 (이벤트 추가)
+``` 
+<script>
+    $('#nav_add_box').click(function () {
+        $('.modal_overlay').css({
+            display: 'flex'
+        })
+    })
+</script>
+```
+
+형식
+```
+$(#'id').이벤트
+$(.'class').이벤트
+```
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

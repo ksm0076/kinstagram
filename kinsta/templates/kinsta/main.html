@@ -15,9 +15,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?after">
     <!-- <link rel="stylesheet" href="css\styles.css"> -->
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 </head>
 
 <body>
@@ -40,13 +46,13 @@
                 <span class="material-symbols-outlined" style="font-size:30px;"> send </span>
                 <span class="material-symbols-outlined" style="font-size:30px;"> explore </span>
                 <span class="material-symbols-outlined" style="font-size:30px;"> favorite </span>
-                <span class="material-symbols-outlined" style="font-size:30px;"> add_box </span>
+                <span id="nav_add_box" class="material-symbols-outlined" style="font-size:30px; cursor:pointer;"> add_box </span>
             </div>
         </div>
-    </nav>    
+    </nav>
     <!-- 왼쪽 오른쪽 -->
     <div style="display: flex; justify-content: center; padding-top:65px;">
-        
+
         <!-- 왼쪽(피드) -->
         <div class="left_part">
             {% for feed in feeds %}
@@ -54,8 +60,7 @@
                 <!-- 사용자정보 -->
                 <div class="profile_section">
                     <div>
-                        <img class="profile_image"
-                            src="{{feed.profile_image}}">
+                        <img class="profile_image" src="{{feed.profile_image}}">
                     </div>
                     <div class="user_id">
                         {{feed.user_id}}
@@ -63,8 +68,7 @@
                 </div>
                 <!-- 사진 올리는 부분 -->
                 <div class="photo_section">
-                    <img
-                        src="{{feed.image}}">
+                    <img src="{{feed.image}}">
                 </div>
                 <!-- 아이콘 부분 -->
                 <div class="icon_section">
@@ -104,7 +108,7 @@
                 <hr>
             </div>
             {%endfor%}
-            
+
         </div>
         <!-- 오른쪽(추천) -->
         <div class="right_part">
@@ -180,6 +184,24 @@
             </div>
         </div>
     </div>
+
+    <!-- 게시물 추가 기능 -->
+    <div class="modal_overlay">
+        <div class="modal_window">
+            <button>asdf</button>
+        </div>
+    </div>
+    <script>
+        $('#nav_add_box').click(function () {
+            $('.modal_overlay').css({
+                display: 'flex',
+            })
+            $(document.body).css({
+                overflow: 'hidden',
+            })
+        })
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
