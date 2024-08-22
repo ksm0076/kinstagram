@@ -279,8 +279,10 @@ class main(APIView):
 ``` 
 <script>
     $('#nav_add_box').click(function () {
+        // modal 띄우기
         $('.modal_overlay').css({
-            display: 'flex'
+            display: 'block',
+            top: window.pageYOffset + 'px',
         })
     })
 </script>
@@ -288,10 +290,64 @@ class main(APIView):
 
 형식
 ```
-$(#'id').이벤트
-$(.'class').이벤트
+$(selector).on(event, function)
+$('#id').이벤트
+$('.class').이벤트
 $(선택자).동작함수()
 ```
+
+#### 4. 드래그 앤 드롭으로 이미지 업로드
+```
+$('.image_upload_section')
+    .on("dragover", dragOver)
+    .on("dragleave", dragOver)
+    .on("drop", uploadFiles);
+
+function dragOver(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (e.type == "dragover") {
+        $(e.target).css({
+            "background-color": "skyblue",
+        });
+    } else {
+        $(e.target).css({
+            "background-color": "white",
+        });
+    }
+}
+
+function uploadFiles(e) {
+    $(document).ready(function () {
+        $('.image_upload_section').text('');
+    });
+
+    e.stopPropagation(); // 부모들에게 영향 주는 것을 막음
+    e.preventDefault(); // 이벤트에 대한 기본 동작을 막음
+
+    e.dataTransfer = e.originalEvent.dataTransfer;
+    var files = e.dataTransfer.files;
+
+    if (files.length > 1) {
+        alert('하나만 올려라.');
+        return;
+    }
+
+    if (files[0].type.match(/image.*/)) {
+        $(e.target).css({
+            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+            "outline": "none",
+            "background-size": "100% 100%"
+        });
+    } else {
+        alert('이미지가 아닙니다.');
+        return;
+    }
+
+}
+```
+
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

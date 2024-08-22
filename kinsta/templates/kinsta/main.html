@@ -187,30 +187,41 @@
 
     <!-- 게시물 추가 기능 -->
     <div class="modal_overlay">
-        <div style="display: flex; flex-direction: row-reverse;
-        padding-right:40px; padding-top:40px; padding-bottom:30px;">
-            <button id="modal_X" style="background-color:transparent;
-            color:white; border-color:transparent;
-            font-size:30px;">X</button>
+        <div class="modal_overlay_top">
+            <button id="modal_X" class="modal_close">
+                <span class="material-symbols-outlined">close</span>
+            </button>
         </div>
         <div style="display: flex; align-items: center; justify-content: center;">
             <div class="modal_window">
-                <button>asdf</button>
+                <div class="modal_window_top">
+                    새 게시물 만들기
+                </div>
+                <hr>
+                <div class="modal_window_bottom">
+                    <div class="image_upload_section">
+                        사진을 여기에 끌어다 놓으세요
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <!-- 게시물 추가 기능 스크립트 -->
     <script>
+        // 게시물 추가 모달 창 띄우기
         $('#nav_add_box').click(function () {
             // modal 띄우기
             $('.modal_overlay').css({
                 display: 'block',
+                top: window.pageYOffset + 'px',
             })
             // 스크롤 없애기
             $(document.body).css({
                 overflow: 'hidden',
             })
         })
-        $('#modal_X').click(function(){
+        // modal 없애기
+        $('#modal_X').click(function () {
             $('.modal_overlay').css({
                 display: 'none',
             })
@@ -218,8 +229,60 @@
                 overflow: 'scroll',
             })
         })
-    </script>
+        // 드래그 앤 드롭 기능
+        $('.image_upload_section')
+            .on("dragover", dragOver)
+            .on("dragleave", dragOver)
+            .on("drop", uploadFiles);
 
+        function dragOver(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            if (e.type == "dragover") {
+                $(e.target).css({
+                    "background-color": "skyblue",
+                });
+            } else {
+                $(e.target).css({
+                    "background-color": "white",
+                });
+            }
+        }
+
+        function uploadFiles(e) {
+            $(document).ready(function () {
+                $('.image_upload_section').text('');
+            });
+
+            e.stopPropagation(); // 부모들에게 영향 주는 것을 막음
+            e.preventDefault(); // 이벤트에 대한 기본 동작을 막음
+
+            e.dataTransfer = e.originalEvent.dataTransfer;
+            var files = e.dataTransfer.files;
+
+            if (files.length > 1) {
+                alert('하나만 올려라.');
+                return;
+            }
+
+            if (files[0].type.match(/image.*/)) {
+                $(e.target).css({
+                    "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                    "outline": "none",
+                    "background-size": "contain",
+                    "background-repeat": "no-repeat",
+                    "background-color": "white",
+                    "background-position": "center",
+                });
+            } else {
+                alert('이미지가 아닙니다.');
+                return;
+            }
+
+        }
+
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
