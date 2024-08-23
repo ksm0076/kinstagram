@@ -249,7 +249,7 @@
                 });
             }
         }
-
+        // 사진을 업로드 했을 때
         function uploadFiles(e) {
             $(document).ready(function () {
                 $('.image_upload_section').text('');
@@ -266,6 +266,7 @@
                 return;
             }
 
+            // 사진이 정상적으로 올라가면
             if (files[0].type.match(/image.*/)) {
                 $(e.target).css({
                     "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
@@ -275,6 +276,12 @@
                     "background-color": "white",
                     "background-position": "center",
                 });
+                
+                $('.modal_window_bottom').html(`
+                   <div class="hi" style="background-color: black; width: 100px;">
+                    asdfasfas
+                    </div>
+                `);
             } else {
                 alert('이미지가 아닙니다.');
                 return;
