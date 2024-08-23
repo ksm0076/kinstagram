@@ -348,6 +348,14 @@ function uploadFiles(e) {
 }
 ```
 
+#### 4. 글 작성으로 넘어가기
+이미지가 업로드 됐을 때 modal_window_bottom의 html을 수정한다
+```
+$('.modal_window_bottom').html(`
+    <div class='image_upload_section'></div>
+    <div> class='글 작성 부분'><div>
+`)
+```
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

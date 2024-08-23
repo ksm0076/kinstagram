@@ -251,9 +251,6 @@
         }
         // 사진을 업로드 했을 때
         function uploadFiles(e) {
-            $(document).ready(function () {
-                $('.image_upload_section').text('');
-            });
 
             e.stopPropagation(); // 부모들에게 영향 주는 것을 막음
             e.preventDefault(); // 이벤트에 대한 기본 동작을 막음
@@ -267,25 +264,50 @@
             }
 
             // 사진이 정상적으로 올라가면
+
             if (files[0].type.match(/image.*/)) {
-                $(e.target).css({
+                $('.modal_window_bottom').html(`
+                    <div class='image_upload_section'></div>
+
+                    <div style="width: 30%; height: 100%; margin-left: 10px; background-color: white">
+                        <div style="outline: rgb(207, 197, 197) solid 1px">
+                            <div class="mb-3">
+                                <div class="profile_section" style="padding: 10px;">
+                                    <img class="profile_image" src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">                                
+                                    <label style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm0000</label>
+                                </div>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"
+                                style="padding: 1px; resize: none; border: none; outline: none;
+                                margin-bottom: -15px; padding-left: 15px;"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: center; margin-top: 20px;">
+                            <button>공유하기</button>
+                        </div>
+                    </div>
+                `);
+                $('.image_upload_section').css({
+                    "width": '70%',
                     "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-                    "outline": "none",
+                    "outline": "solid 1px #cfc5c5",
                     "background-size": "contain",
                     "background-repeat": "no-repeat",
                     "background-color": "white",
                     "background-position": "center",
                 });
-                
-                $('.modal_window_bottom').html(`
-                   <div class="hi" style="background-color: black; width: 100px;">
-                    asdfasfas
-                    </div>
-                `);
+
+                $('.modal_window').css({
+                    "width": '900px',
+                })
+
             } else {
                 alert('이미지가 아닙니다.');
+                $(e.target).css({
+                    "background-color": "white",
+                });
                 return;
             }
+
 
         }
 
