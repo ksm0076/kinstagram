@@ -264,7 +264,6 @@
             }
 
             // 사진이 정상적으로 올라가면
-
             if (files[0].type.match(/image.*/)) {
                 $('.modal_window_bottom').html(`
                     <div class='image_upload_section'></div>
@@ -277,12 +276,12 @@
                                     <label style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm0000</label>
                                 </div>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"
-                                style="padding: 1px; resize: none; border: none; outline: none;
+                                style="padding: 1px; resize: none; border: none; outline: none; box-shadow: none;
                                 margin-bottom: -15px; padding-left: 15px;"></textarea>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; margin-top: 20px;">
-                            <button>공유하기</button>
+                            <button class="btn btn-primary" >공유하기</button>
                         </div>
                     </div>
                 `);
@@ -307,8 +306,6 @@
                 });
                 return;
             }
-
-
         }
 
     </script>

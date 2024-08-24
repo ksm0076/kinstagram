@@ -200,7 +200,7 @@ ORM : Object Relational Mapping
 
 ### 11. 피드에 대한 필드 파악
 #### 피드
-|**ID**|**프로필사진**|**작성자이름**|**올린사진**|**글내용**|좋아요수|댓글|
+|**ID**|**프로필사진**|**작성자이름**|**올린사진**|**글내용**|댓글|좋아요수|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |o|o|o|o|o|-> 참조|-> 참조|
 
@@ -214,7 +214,7 @@ ORM : Object Relational Mapping
 |:-:|:-:|:-:|
 |o|o|o|
 
-(좋아요 여부는 취소 기능을 위함)
+(좋아요여부 : 취소 기능을 위함)
 
 ### 12. 모델 작성
 > kinsta/content/models.py
@@ -246,13 +246,10 @@ from .models import Feed
 
 class main(APIView):
     def get(self, request):
-        feed_list = Feed.objects.all() # select * from content_feed
-        
-        for f in feed_list:
-            print(f.content) # 피드의 내용을 볼 수 있음
+        feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
         
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
-        return render(request, 'kinsta/main.html', context=dict(feed_list=feed_list))
+        return render(request, 'kinsta/main.html', context=dict(feeds=feed_list))
 ```
 ### 15. main.html에 템플릿 언어 사용
 ```
@@ -262,20 +259,44 @@ class main(APIView):
 ```
 
 ### 16. 게시물 추가 기능 (모달 창 만들기, JS, JQuery)
-#### 2. 모달 코드 작성
-
-#### 1. JQuery 사용하기 위해 추가
+* 모달 창 띄우기 html
 ```
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+<!-- 게시물 추가 기능 -->
+<div class="modal_overlay">
+    <div class="modal_overlay_top">
+        <button id="modal_X" class="modal_close">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <div class="modal_window">
+            <div class="modal_window_top">
+                새 게시물 만들기
+            </div>
+            <hr>
+            <div class="modal_window_bottom">
+                <div class="image_upload_section">
+                    사진을 여기에 끌어다 놓으세요
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 ```
 
-#### 2. 게시글 추가 아이콘에 클릭 기능 추가 (id를 넣어줌)
+* JQuery 사용하기 위해 추가
+```
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+```
+
+* 게시글 추가 아이콘에 클릭 기능 추가 (id를 넣어줌)
 > kinsta/templates/kinsta/main.html
 ```
 <span id="nav_add_box" class="material-symbols-outlined" style="font-size:30px; cursor:pointer;"> add_box </span>
 ```
 
-#### 3. 아이콘 클릭 시 작동 (이벤트 추가)
+* 아이콘 클릭 시 작동 (이벤트 추가)
 ``` 
 <script>
     $('#nav_add_box').click(function () {
@@ -296,7 +317,7 @@ $('.class').이벤트
 $(선택자).동작함수()
 ```
 
-#### 4. 드래그 앤 드롭으로 이미지 업로드
+* 드래그 앤 드롭으로 이미지 업로드
 ```
 $('.image_upload_section')
     .on("dragover", dragOver)
@@ -318,11 +339,8 @@ function dragOver(e) {
     }
 }
 
+// 사진을 업로드 했을 때
 function uploadFiles(e) {
-    $(document).ready(function () {
-        $('.image_upload_section').text('');
-    });
-
     e.stopPropagation(); // 부모들에게 영향 주는 것을 막음
     e.preventDefault(); // 이벤트에 대한 기본 동작을 막음
 
@@ -334,28 +352,30 @@ function uploadFiles(e) {
         return;
     }
 
+    // 사진이 정상적으로 올라가면
     if (files[0].type.match(/image.*/)) {
         $(e.target).css({
-            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-            "outline": "none",
-            "background-size": "100% 100%"
-        });
+        "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+        "outline": "none",
+        "background-size": "100% 100%"
+    });
     } else {
         alert('이미지가 아닙니다.');
         return;
     }
-
 }
 ```
 
-#### 4. 글 작성으로 넘어가기
-이미지가 업로드 됐을 때 modal_window_bottom의 html을 수정한다
+* 글 작성으로 넘어가기
+이미지가 업로드 됐을 때 modal_window_bottom의 html 수정
 ```
 $('.modal_window_bottom').html(`
     <div class='image_upload_section'></div>
     <div> class='글 작성 부분'><div>
 `)
 ```
+
+### 17. 서버로 파일 업로드하는 API 만들기 (AJAX)
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
