@@ -6,7 +6,7 @@ from .models import Feed
 
 from uuid import uuid4
 import os
-from kinsta.settings import MEDIA_ROOT, MEDIA_URL
+from kinsta.settings import MEDIA_ROOT
 
 # Create your views here.
 class test(APIView):
@@ -22,7 +22,7 @@ class main(APIView):
 
 # from uuid import uuid4
 # import os
-# from kinsta.settings import MEDIA_ROOT, MEDIA_URL
+# from kinsta.settings import MEDIA_ROOT
 
 class upload_feed(APIView):
     def post(self, request):

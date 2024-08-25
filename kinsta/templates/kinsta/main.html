@@ -326,7 +326,7 @@
             fd.append('user_id', user_id);
             fd.append('profile_img', profile_img);
 
-            // view 로 넘기기
+            /// /content/upload url로 접속하면 실행되는 함수로로 넘기기(view)
             $.ajax({
                 url: "/content/upload",
                 data: fd,
@@ -343,6 +343,7 @@
                 },
                 complete: function(){
                     console.log("ajax 완료");
+                    location.replace('/main')
                 }
             }
             )

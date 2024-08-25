@@ -259,6 +259,8 @@ class main(APIView):
 {% endfor%}
 ```
 
+<hr>
+
 ### 16. 게시물 추가 기능 (모달 창 만들기, JS, JQuery)
 * 모달 창 띄우기 html
 ```
@@ -372,7 +374,7 @@ function uploadFiles(e) {
 ```
 $('.modal_window_bottom').html(`
     <div class='image_upload_section'></div>
-    <div> class='글 작성 부분'><div>
+    <div class='글 작성 부분'><div>
 `)
 ```
 
@@ -400,7 +402,7 @@ $(document).on('click', '#feed_create_button', function () {
     fd.append('user_id', user_id);
     fd.append('profile_img', profile_img);
 
-    // view 로 넘기기
+    // /content/upload url로 접속하면 실행되는 함수로로 넘기기(view)
     $.ajax({
         url: "/content/upload",
         data: fd,
@@ -504,13 +506,19 @@ class upload_feed(APIView):
 <details>
 <summary>서버에 이미지 올리기 과정 정리</summary>
 
-1. main.html 에서 ajax로 view에 정보 전송 (url: "/content/upload")
+1. 브라우저(main.html)의 피드 정보를 ajax로 view에 정보 전송 (url: "/content/upload")
 2. kinsta/content/urls.py 에서 url 연결: path('upload', upload_feed.as_view())
 3. settings.py 에서 MEDIA URL 설정
 4. kinsta/kinsta/urls.py 에서 media 폴더 접근 연결
-5. views.py 에서 이미지 처리, DB에 objects.create
+5. views.py 에서 이미지 처리(class upload_fedd), DB에 objects.create
 6. html에서 피드에 올라올 사진 media/image_name 으로 접근할 수 있도록 함
 </details>
+
+### 19. 피드 올리기 완료하면 메인 다시 불러오기
+```
+location.replace('/main')
+```
+<hr>
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
