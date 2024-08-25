@@ -25,3 +25,11 @@ urlpatterns = [
     path('main/', main.as_view(), name='main'),
     path('content/', include('content.urls')),
 ]
+
+
+# media 폴더에 접근하기 위한 코드
+# from django.conf import settings
+from django.conf.urls.static import static
+from .settings import MEDIA_URL, MEDIA_ROOT
+
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

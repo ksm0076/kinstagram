@@ -68,7 +68,7 @@
                 </div>
                 <!-- 사진 올리는 부분 -->
                 <div class="photo_section">
-                    <img src="{{feed.image}}">
+                    <img src="{% get_media_prefix %}{{feed.image}}">
                 </div>
                 <!-- 아이콘 부분 -->
                 <div class="icon_section">
@@ -118,9 +118,7 @@
                     <img class="profile_image"
                         src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
                     <div>
-                        <div class="user_id">
-                            ksm1236
-                        </div>
+                        <div id='my_id' class="user_id">ksm1236</div>
                         <div style="margin-left: 10px; color:rgb(117, 111, 111)">
                             aaaa
                         </div>
@@ -249,6 +247,8 @@
                 });
             }
         }
+
+        let files;
         // 사진을 업로드 했을 때
         function uploadFiles(e) {
 
@@ -256,7 +256,7 @@
             e.preventDefault(); // 이벤트에 대한 기본 동작을 막음
 
             e.dataTransfer = e.originalEvent.dataTransfer;
-            var files = e.dataTransfer.files;
+            files = e.dataTransfer.files;
 
             if (files.length > 1) {
                 alert('하나만 올려라.');
@@ -272,16 +272,16 @@
                         <div style="outline: rgb(207, 197, 197) solid 1px">
                             <div class="mb-3">
                                 <div class="profile_section" style="padding: 10px;">
-                                    <img class="profile_image" src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">                                
-                                    <label style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm0000</label>
+                                    <img class="profile_image" src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">                                
+                                    <label id='my_id' style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm1236</label>
                                 </div>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"
+                                <textarea class="form-control" id="feed_input_content" rows="7"
                                 style="padding: 1px; resize: none; border: none; outline: none; box-shadow: none;
                                 margin-bottom: -15px; padding-left: 15px;"></textarea>
                             </div>
                         </div>
                         <div style="display: flex; justify-content: center; margin-top: 20px;">
-                            <button class="btn btn-primary" >공유하기</button>
+                            <button id="feed_create_button" class="btn btn-primary">공유하기</button>
                         </div>
                     </div>
                 `);
@@ -307,6 +307,49 @@
                 return;
             }
         }
+        // 글 작성 후 공유하기 버튼 클릭했을 때
+        // 동적으로 생성된 버튼이기 때문에 $(document).on으로 접근
+        $(document).on('click', '#feed_create_button', function () {
+            let file = files[0];
+            let img_name = file.name;
+            let content = $('#feed_input_content').val();
+            let user_id = $('#my_id').text();
+            let profile_img = "https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png";
+
+            alert('내용: ' + content + '\n아이디: ' + user_id);
+            
+            let fd = new FormData();            
+
+            fd.append('file', file);
+            fd.append('img_name', img_name)
+            fd.append('content', content);
+            fd.append('user_id', user_id);
+            fd.append('profile_img', profile_img);
+
+            // view 로 넘기기
+            $.ajax({
+                url: "/content/upload",
+                data: fd,
+                method: "POST",
+
+                processData: false,  // 데이터를 쿼리스트링으로 변환하지 않음
+                contentType: false,
+
+                success: function(data){
+                    console.log("성공");
+                },
+                error: function(request, status, error){
+                    console.log("에러");
+                },
+                complete: function(){
+                    console.log("ajax 완료");
+                }
+            }
+            )
+            console.log("클릭--");
+        });
+
+
 
     </script>
 

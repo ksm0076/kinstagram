@@ -251,10 +251,11 @@ class main(APIView):
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(request, 'kinsta/main.html', context=dict(feeds=feed_list))
 ```
-### 15. main.html에 템플릿 언어 사용
+### 15. main.html에 템플릿 언어 사용해서 피드 데이터 DB에서 가져오기
 ```
 {% for feed in feeds%}            
-    <div>{{feed.content}}</div>            
+    <div>{{feed.content}}</div>
+    ...
 {% endfor%}
 ```
 
@@ -309,7 +310,7 @@ class main(APIView):
 </script>
 ```
 
-형식
+JQuery 형식
 ```
 $(selector).on(event, function)
 $('#id').이벤트
@@ -375,7 +376,141 @@ $('.modal_window_bottom').html(`
 `)
 ```
 
-### 17. 서버로 파일 업로드하는 API 만들기 (AJAX)
+### 17. 서버로 파일 업로드하는 API 만들기 (AJAX), view로 넘기기
+* 업로드 사진의 변수 files를 전역 변수로 선언해서 함수에서도 쓸 수 있도록 함
+
+> 공유하기 버튼 클릭 -> ajax로 데이터 보내기
+```
+// 글 작성 후 공유하기 버튼 클릭했을 때
+// 동적으로 생성된 버튼이기 때문에 $(document).on으로 접근
+$(document).on('click', '#feed_create_button', function () {
+    let file = files[0];
+    let img_name = file.name;
+    let content = $('#feed_input_content').val();
+    let user_id = $('#my_id').text();
+    let profile_img = "https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png";
+
+    alert('내용: ' + content + '\n아이디: ' + user_id);
+    
+    let fd = new FormData();            
+
+    fd.append('file', file);
+    fd.append('img_name', img_name)
+    fd.append('content', content);
+    fd.append('user_id', user_id);
+    fd.append('profile_img', profile_img);
+
+    // view 로 넘기기
+    $.ajax({
+        url: "/content/upload",
+        data: fd,
+        method: "POST",
+
+        processData: false,  // 데이터를 쿼리스트링으로 변환하지 않음
+        contentType: false,
+
+        success: function(data){
+            console.log("성공");
+        },
+        error: function(request, status, error){
+            console.log("에러");
+        },
+        complete: function(){
+            console.log("ajax 완료");
+        }
+    }
+    )
+    console.log("클릭--");
+});
+```
+
+### 18. 장고 서버에 이미지 올리기
+일반적으로 이미지 DB를 따로 두어 그곳에 이미지를 저장하고 그 주소를 불러오지만<br>
+이 프로젝트에서는 장고 프로젝트(media 폴더)에 이미지를 저장한다.
+
+> kinsta/media 폴더 생성<br>
+> kinsta/kinsta/settings.py
+```
+import os
+
+# 각 media 파일에 대한 URL Prefix
+MEDIA_URL = '/media/' # 항상 / 로 끝나도록 설정
+# MEDIA_URL = 'http://static.myservice.com/media/' 다른 서버로 media 파일 복사시
+
+# 업로드된 파일을 저장할 디렉토리 경로
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+```
+
+> kinsta/kinsta/urls.py
+```
+# media 폴더에 접근하기 위한 코드
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+> kinsta/content/views.py
+```
+from rest_framework.response import Response
+from uuid import uuid4
+import os
+from kinsta.settings import MEDIA_ROOT, MEDIA_URL
+
+class upload_feed(APIView):
+    def post(self, request):
+        # file = request.data.get('file')
+        
+        file = request.FILES['file']
+        
+        # 파일 이름을 고유한 id로 변경 (프로그램에서 다루기 쉽게)
+        uuid_name = uuid4().hex
+        # /MEDIA_ROOT/uuid_name로 이미지 저장
+        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+        
+        # 파일 읽기
+        with open(save_path, 'wb+') as destination:
+            for chunk  in file.chunks():
+                destination.write(chunk)
+        
+        content = request.data.get('content')
+        user_id = request.data.get('user_id')
+        profile_img = request.data.get('profile_img')
+        
+        img_location = uuid_name
+        
+        print(file)
+        print(uuid_name)
+        print(content)
+        print(user_id)
+        print(profile_img)
+        
+        Feed.objects.create(profile_image = profile_img, user_id = user_id,
+                            image = img_location,content = content,
+                            like_count = 0)
+
+        return Response(status=200)
+```
+
+이대로 하면 DB에 저장된 파일이름만으로는 파일 위치를 알 수 없음
+> main.html 수정 (MEDIA URL을 앞에 붙인 주소로 접근)
+```
+{% load static %}
+<!-- 사진 올리는 부분 -->
+<div class="photo_section">
+    <img src="{% get_media_prefix %}{{feed.image}}">
+</div>
+```
+<details>
+<summary>서버에 이미지 올리기 과정 정리</summary>
+
+1. main.html 에서 ajax로 view에 정보 전송 (url: "/content/upload")
+2. kinsta/content/urls.py 에서 url 연결: path('upload', upload_feed.as_view())
+3. settings.py 에서 MEDIA URL 설정
+4. kinsta/kinsta/urls.py 에서 media 폴더 접근 연결
+5. views.py 에서 이미지 처리, DB에 objects.create
+6. html에서 피드에 올라올 사진 media/image_name 으로 접근할 수 있도록 함
+</details>
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

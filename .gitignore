@@ -5,5 +5,9 @@ myenv/
 __pycache__/
 .vscode
 
+# 
+media
+kinsta/db.sqlite3
+
 #
 LWJ*
