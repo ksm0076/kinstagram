@@ -520,5 +520,41 @@ location.replace('/main')
 ```
 <hr>
 
+### 20. 사용자(user) 모델 만들기
+사용자 모델은 장고에 디폴트로 존재 (auth_user)<br>
+이것을 상속 받아 커스텀 유저 모델 만들기<br>
+유저 앱 만들기 (settings.py 에 앱 등록하는 것 잊지 말기)
+```
+python manage.py startapp user
+```
+#### 유저 모델
+|**이메일**|**비밀번호**|**이름**|**닉네임**|**프로필사진**|
+|:-:|:-:|:-:|:-:|:-:|
+|o|o|o|o|o|
+
+
+> kinsta/user/models.py
+```
+from django.contrib.auth.models import AbstractBaseUser
+
+class user(AbstractBaseUser):    
+    user_email = models.EmailField(unique=True) # 유저 이메일 주소 (회원가입할때 사용하는 아이디)
+    # user_password  # 유저 비밀번호
+    user_name = models.CharField(max_length=20) # 유저 실제이름
+    user_nickname = models.CharField(max_length=20, unique=True) # 유저 닉네임
+    profile_img = models.TextField() # 유저 프로필 사진
+    
+    USERNAME_FIELD = 'user_nickname'
+    
+    class Meta: # 테이블 이름
+        db_table = "user"
+```
+
+> settings.py
+```
+# Apply custom user model
+AUTH_USER_MODEL = 'user.user'
+```
+
 <hr/>
 https://youtu.be/M8UPyeF5DfM

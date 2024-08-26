@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'content',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,6 @@ MEDIA_URL = '/media/' # 항상 / 로 끝나도록 설정
 
 # 업로드된 파일을 저장할 디렉토리 경로
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Apply default user model '앱.모델'
+AUTH_USER_MODEL = 'user.user'
