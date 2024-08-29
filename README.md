@@ -487,6 +487,7 @@ class upload_feed(APIView):
         print(user_id)
         print(profile_img)
         
+        # 컬럼명 = 데이터
         Feed.objects.create(profile_image = profile_img, user_id = user_id,
                             image = img_location,content = content,
                             like_count = 0)
@@ -510,7 +511,7 @@ class upload_feed(APIView):
 2. kinsta/content/urls.py 에서 url 연결: path('upload', upload_feed.as_view())
 3. settings.py 에서 MEDIA URL 설정
 4. kinsta/kinsta/urls.py 에서 media 폴더 접근 연결
-5. views.py 에서 이미지 처리(class upload_fedd), DB에 objects.create
+5. views.py 에서 이미지 처리(class upload_feed), DB에 objects.create
 6. html에서 피드에 올라올 사진 media/image_name 으로 접근할 수 있도록 함
 </details>
 
@@ -562,7 +563,43 @@ AUTH_USER_MODEL = 'user.user'
 
 views.py 작성, urls 연결
 
-### 23. 
+### 23. ajax를 통해 회원가입 정보 보내기
+패스워드는 장고에서 제공하는 암호화(make_password) 사용
+> kinsta/user/views.py
+```
+from .models import user
+from django.contrib.auth.hashers import make_password
+from rest_framework.response import Response
+from django.http import JsonResponse
+
+
+# Create your views here.
+class signup(APIView):
+    def get(self, request):
+        return render(request, "user/signup.html")  # html 파일 위치
+
+    def post(self, request):
+        profile_img = "media/default_profile.jpg"
+        email = request.data.get("user_email")
+        user_name = request.data.get("user_name")
+        user_nickname = request.data.get("user_nickname")
+        user_password = request.data.get("user_password")
+
+        if user.objects.filter(user_email=email).exists():
+            return JsonResponse({"success": False, "error": "이메일이 중복되었습니다."})
+        
+        if user.objects.filter(user_nickname = user_nickname).exists():
+            return JsonResponse({"success": False, "error": "닉네임이 중복되었습니다."})
+
+        user.objects.create(
+            profile_img=profile_img,
+            user_email=email,
+            user_name=user_name,
+            user_nickname=user_nickname,
+            password=make_password(user_password),
+        )
+        return JsonResponse({'success' : True})
+```
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

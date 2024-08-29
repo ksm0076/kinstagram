@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     {% load static %}
     <style>
@@ -82,19 +84,19 @@
         <hr style="width: 90%; border: 1px solid rgb(219, 219, 219); opacity: 1;">
 
         <div class="form-floating">
-            <input type="email" class="form-control" placeholder="name@example.com"></textarea>
+            <input id="email_address" type="email" class="form-control" placeholder="name@example.com"></textarea>
             <label class="lb_style">이메일 주소</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="홍길동"></textarea>
+            <textarea id="name" class="form-control" placeholder="홍길동"></textarea>
             <label class="lb_style">성명</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Robin Hood"></textarea>
+            <textarea id="nickname" class="form-control" placeholder="Robin Hood"></textarea>
             <label class="lb_style">사용자 이름 (닉네임)</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" placeholder="password">
+            <input id="password" type="password" class="form-control" placeholder="password">
             <label class="lb_style">비밀번호</label>
         </div>
 
@@ -102,9 +104,67 @@
     </div>
     <div class="join" style="height: 100px;">
         <div>
-            계정이 있으신가요? <a class="link_style" href = 'login'> 로그인 </a>
+            계정이 있으신가요? <a class="link_style" href='login'> 로그인 </a>
         </div>
     </div>
+
+    <script>
+        $('.btn-primary').click(function () {
+
+            let email_address = $('#email_address').val();
+            let name = $('#name').val();
+            let nickname = $('#nickname').val();
+            let password = $('#password').val();
+
+            // 피드에서는 사진을 올리기 위해 FormData를 사용했지만
+            // 회원가입 정보는 String만 있기 때문에 JSON 사용
+            let member_info = new FormData;
+            member_info.append('user_email', email_address);
+            member_info.append('user_name', name);
+            member_info.append('user_nickname', nickname);
+            member_info.append('user_password', password);
+            // member_info.append('profile_img', );
+
+            $.ajax({
+                url: "/user/signup",
+                data: {
+                    user_email: email_address,
+                    user_name: name,
+                    user_nickname: nickname,
+                    user_pasword: password
+                },
+                method: "POST",
+                // dataType: 'json',
+
+                // processData: false,  // 데이터를 쿼리스트링으로 변환하지 않음
+                // contentType: false,
+
+                success: function (response) {
+                    if (response.success) {
+                        alert("회원가입 성공");
+                        console.log("--회원가입--성공");
+                        location.replace('/user/login')
+                    } else {
+                        alert("회원가입 실패\n" + response.error);
+                        console.log("--회원가입--성공");
+                    }
+                },
+                error: function (request, status, error) {
+                    alert("회원가입 실패");
+                    console.log("----에러");
+                },
+                complete: function () {
+                    console.log("----ajax 완료");
+                    // location.replace('/main')
+                    console.log("이메일 : " + email_address)
+                    console.log("성명 : " + name)
+                    console.log("닉네임 : " + nickname)
+                    console.log("비밀번호 : " + password)
+                }
+            }
+            )
+        })
+    </script>
 </body>
 
 </html>
