@@ -390,7 +390,7 @@ $(document).on('click', '#feed_create_button', function () {
     let img_name = file.name;
     let content = $('#feed_input_content').val();
     let user_id = $('#my_id').text();
-    let profile_img = "https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png";
+    let profile_img = "";
 
     alert('내용: ' + content + '\n아이디: ' + user_id);
     
@@ -555,6 +555,14 @@ class user(AbstractBaseUser):
 # Apply custom user model
 AUTH_USER_MODEL = 'user.user'
 ```
+
+### 21. 회원가입 html 작성
+
+### 22. 로그인 html 작성
+
+views.py 작성, urls 연결
+
+### 23. 
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
