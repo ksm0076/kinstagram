@@ -84,19 +84,19 @@
         <hr style="width: 90%; border: 1px solid rgb(219, 219, 219); opacity: 1;">
 
         <div class="form-floating">
-            <input id="email_address" type="email" class="form-control" placeholder="name@example.com"></textarea>
+            <input id="input_email_address" type="email" class="form-control" placeholder="name@example.com"></textarea>
             <label class="lb_style">이메일 주소</label>
         </div>
         <div class="form-floating">
-            <textarea id="name" class="form-control" placeholder="홍길동"></textarea>
+            <textarea id="input_name" class="form-control" placeholder="홍길동"></textarea>
             <label class="lb_style">성명</label>
         </div>
         <div class="form-floating">
-            <textarea id="nickname" class="form-control" placeholder="Robin Hood"></textarea>
+            <textarea id="input_nickname" class="form-control" placeholder="Robin Hood"></textarea>
             <label class="lb_style">사용자 이름 (닉네임)</label>
         </div>
         <div class="form-floating">
-            <input id="password" type="password" class="form-control" placeholder="password">
+            <input id="input_password" type="password" class="form-control" placeholder="password">
             <label class="lb_style">비밀번호</label>
         </div>
 
@@ -111,27 +111,20 @@
     <script>
         $('.btn-primary').click(function () {
 
-            let email_address = $('#email_address').val();
-            let name = $('#name').val();
-            let nickname = $('#nickname').val();
-            let password = $('#password').val();
+            let email_address = $('#input_email_address').val();
+            let name = $('#input_name').val();
+            let nickname = $('#input_nickname').val();
+            let password = $('#input_password').val();
 
             // 피드에서는 사진을 올리기 위해 FormData를 사용했지만
             // 회원가입 정보는 String만 있기 때문에 JSON 사용
-            let member_info = new FormData;
-            member_info.append('user_email', email_address);
-            member_info.append('user_name', name);
-            member_info.append('user_nickname', nickname);
-            member_info.append('user_password', password);
-            // member_info.append('profile_img', );
-
             $.ajax({
                 url: "/user/signup",
                 data: {
                     user_email: email_address,
                     user_name: name,
                     user_nickname: nickname,
-                    user_pasword: password
+                    user_password: password
                 },
                 method: "POST",
                 // dataType: 'json',
@@ -146,11 +139,11 @@
                         location.replace('/user/login')
                     } else {
                         alert("회원가입 실패\n" + response.error);
-                        console.log("--회원가입--성공");
+                        console.log("--회원가입--실패");
                     }
                 },
                 error: function (request, status, error) {
-                    alert("회원가입 실패");
+                    alert("회원가입 에러");
                     console.log("----에러");
                 },
                 complete: function () {

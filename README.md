@@ -563,7 +563,52 @@ AUTH_USER_MODEL = 'user.user'
 
 views.py 작성, urls 연결
 
-### 23. ajax를 통해 회원가입 정보 보내기
+### 23. ajax를 통해 회원가입 정보 보내기, 받기
+> signup.html
+```
+<script>
+    $('.btn-primary').click(function () {
+
+        let email_address = $('#input_email_address').val();
+        let name = $('#input_name').val();
+        let nickname = $('#input_nickname').val();
+        let password = $('#input_password').val();
+
+        // 피드에서는 사진을 올리기 위해 FormData를 사용했지만
+        // 회원가입 정보는 String만 있기 때문에 JSON 사용
+        $.ajax({
+            url: "/user/signup",
+            data: {
+                user_email: email_address,
+                user_name: name,
+                user_nickname: nickname,
+                user_password: password
+            },
+            method: "POST",
+
+            success: function (response) {
+                if (response.success) {
+                    alert("회원가입 성공");
+                    console.log("--회원가입--성공");
+                    location.replace('/user/login')
+                } else {
+                    alert("회원가입 실패\n" + response.error);
+                    console.log("--회원가입--실패");
+                }
+            },
+            error: function (request, status, error) {
+                alert("회원가입 에러");
+                console.log("----에러");
+            },
+            complete: function () {
+                console.log("----ajax 완료");
+            }
+        }
+        )
+    })
+</script>
+```
+
 패스워드는 장고에서 제공하는 암호화(make_password) 사용
 > kinsta/user/views.py
 ```
@@ -575,9 +620,6 @@ from django.http import JsonResponse
 
 # Create your views here.
 class signup(APIView):
-    def get(self, request):
-        return render(request, "user/signup.html")  # html 파일 위치
-
     def post(self, request):
         profile_img = "media/default_profile.jpg"
         email = request.data.get("user_email")
@@ -601,5 +643,27 @@ class signup(APIView):
         return JsonResponse({'success' : True})
 ```
 
+### 24. ajax를 통해 로그인 정보 보내기, 받기
+> kinsta/user/views.py
+```
+class login(APIView):
+    def post(self, request):
+        user_email = request.data.get("user_email")
+        user_password = request.data.get("user_password")
+        
+        login_user = user.objects.filter(user_email = user_email).first()
+        
+        if login_user == None:
+            print("존재하지 않는 사용자 접근")
+            # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
+            return JsonResponse({"success" : False, "error" : "존재하지 않는 회원입니다."})
+        
+        if login_user.check_password(user_password):
+            return JsonResponse({"success" : True})
+        else:
+            # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
+            return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
+
+```
 <hr/>
 https://youtu.be/M8UPyeF5DfM

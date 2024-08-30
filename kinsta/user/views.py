@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import user
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 
 
@@ -23,13 +23,14 @@ class signup(APIView):
         if user.objects.filter(user_nickname = user_nickname).exists():
             return JsonResponse({"success": False, "error": "닉네임이 중복되었습니다."})
 
-        user.objects.create(
+        u = user.objects.create(
             profile_img=profile_img,
             user_email=email,
             user_name=user_name,
             user_nickname=user_nickname,
             password=make_password(user_password),
         )
+        
         return JsonResponse({'success' : True})
 
 
@@ -38,4 +39,18 @@ class login(APIView):
         return render(request, "user/login.html")  # html 파일 위치
 
     def post(self, request):
-        pass
+        user_email = request.data.get("user_email")
+        user_password = request.data.get("user_password")
+        
+        login_user = user.objects.filter(user_email = user_email).first()
+        
+        if login_user == None:
+            print("존재하지 않는 사용자 접근")
+            # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
+            return JsonResponse({"success" : False, "error" : "존재하지 않는 회원입니다."})
+        
+        if login_user.check_password(user_password):
+            return JsonResponse({"success" : True})
+        else:
+            # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
+            return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
