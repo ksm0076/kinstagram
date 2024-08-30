@@ -25,7 +25,6 @@
 
 
 </head>
-
 <body>
     <!-- 상단바 -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed; width:100%;">
@@ -119,12 +118,12 @@
             <!-- 내 정보 -->
             <div style="display:flex; justify-content: space-between;">
                 <div class="profile_section">
-                    <img class="profile_image"
-                        src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">
+                    <img id = "user_profile" class="profile_image"
+                        src="{% get_media_prefix %}{{user.profile_img}}">
                     <div>
-                        <div id='my_id' class="user_id">ksm1236</div>
+                        <div id='my_nickname' class="user_id">{{user.user_nickname}}</div>
                         <div style="margin-left: 10px; color:rgb(117, 111, 111)">
-                            aaaa
+                            {{ user.user_name }}
                         </div>
                     </div>
                 </div>
@@ -163,8 +162,7 @@
                 </div>
                 <div style="display:flex; justify-content: space-between;">
                     <div class="profile_section">
-                        <img class="profile_image"
-                            src="/media/default_profile.jpg">
+                        <img class="profile_image" src="/media/default_profile.jpg">
                         <div>
                             <div class="user_id">
                                 bbb456
@@ -208,6 +206,7 @@
             </div>
         </div>
     </div>
+
     <!-- 게시물 추가 기능 스크립트 -->
     <script>
         // 게시물 추가 모달 창 띄우기
@@ -278,7 +277,7 @@
                             <div class="mb-3">
                                 <div class="profile_section" style="padding: 10px;">
                                     <img class="profile_image" src="https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png">                                
-                                    <label id='my_id' style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm1236</label>
+                                    <label id='my_nickname' style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm1236</label>
                                 </div>
                                 <textarea class="form-control" id="feed_input_content" rows="7"
                                 style="padding: 1px; resize: none; border: none; outline: none; box-shadow: none;
@@ -318,12 +317,12 @@
             let file = files[0];
             let img_name = file.name;
             let content = $('#feed_input_content').val();
-            let user_id = $('#my_id').text();
-            let profile_img = "https://img.khan.co.kr/news/2023/05/12/news-p.v1.20230512.e5fffd99806f4dcabd8426d52788f51a_P1.png";
+            let user_id = $('#my_nickname').text();
+            let profile_img = $("#user_profile").attr('src');
 
             // alert('내용: ' + content + '\n아이디: ' + user_id);
 
-            let fd = new FormData();            
+            let fd = new FormData();
             fd.append('file', file);
             fd.append('img_name', img_name)
             fd.append('content', content);

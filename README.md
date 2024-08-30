@@ -658,12 +658,44 @@ class login(APIView):
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "존재하지 않는 회원입니다."})
         
+        # 로그인 성공
         if login_user.check_password(user_password):
             return JsonResponse({"success" : True})
         else:
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
-
 ```
+
+### 25. 로그인 정보 세션
+세션 - 서버에서 기억<br>
+쿠키 - 사용자 브라우저에서 기억<br>
+> user/views.py
+```
+class login(APIView):
+    def post(self, request):        
+        # 로그인 성공
+        if login_user.check_password(user_password):
+            request.session['email'] = user_email # 추가
+            return JsonResponse({"success" : True})
+```
+
+> content/views.py
+```
+class main(APIView):
+    def get(self, request):
+        feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
+                
+        user_email = request.session['email'] # 세션 저장
+        if user_email == None:
+            return render(request, 'user/login.html')        
+        login_user = user.objects.filter(user_email = user_email).first() # 유저 정보
+                
+        # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
+        return render(request, 'kinsta/main.html', context=dict(feeds=feed_list, user = login_user)) # 추가
+```
+
+
+
+
 <hr/>
 https://youtu.be/M8UPyeF5DfM

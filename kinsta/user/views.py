@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import user
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 
 
@@ -11,7 +11,7 @@ class signup(APIView):
         return render(request, "user/signup.html")  # html 파일 위치
 
     def post(self, request):
-        profile_img = "media/default_profile.jpg"
+        profile_img = "default_profile.jpg"
         email = request.data.get("user_email")
         user_name = request.data.get("user_name")
         user_nickname = request.data.get("user_nickname")
@@ -49,7 +49,9 @@ class login(APIView):
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "존재하지 않는 회원입니다."})
         
+        # 로그인 성공
         if login_user.check_password(user_password):
+            request.session['email'] = user_email
             return JsonResponse({"success" : True})
         else:
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})

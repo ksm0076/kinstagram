@@ -8,6 +8,8 @@ from uuid import uuid4
 import os
 from kinsta.settings import MEDIA_ROOT
 
+from user.models import user
+
 # Create your views here.
 class test(APIView):
     def get(self, request):
@@ -16,9 +18,21 @@ class test(APIView):
 class main(APIView):
     def get(self, request):
         feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
+                
+        #
+        user_email = request.session['email']
+        
+        if user_email == None:
+            return render(request, 'user/login.html')
+        
+        login_user = user.objects.filter(user_email = user_email).first() # 유저 정보
+        print("유저 이름 :", login_user.user_name)
+        print("유저 이메일 :", login_user.user_email)
+        print("유저 닉네임 :", login_user.user_nickname)
+        #
         
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
-        return render(request, 'kinsta/main.html', context=dict(feeds=feed_list))
+        return render(request, 'kinsta/main.html', context=dict(feeds=feed_list, user = login_user))
 
 # from uuid import uuid4
 # import os
