@@ -56,3 +56,12 @@ class login(APIView):
         else:
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
+
+from django.contrib.auth import logout
+
+class logout(APIView):
+    def get(self, request):
+        # 세션 삭제
+        request.session.clear()
+        print("세션 삭제")
+        return render(request, "user/login.html")

@@ -14,16 +14,17 @@ from user.models import user
 class test(APIView):
     def get(self, request):
         return render(request, 'content/test.html') # html 파일 위치
-    
+
 class main(APIView):
     def get(self, request):
         feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
                 
         #
-        user_email = request.session['email']
-        
-        if user_email == None:
-            return render(request, 'user/login.html')
+        try:
+            user_email = request.session['email']
+        except KeyError:
+            print("세션 비어있음")
+            return render(request, 'user/login.html')              
         
         login_user = user.objects.filter(user_email = user_email).first() # 유저 정보
         print("유저 이름 :", login_user.user_name)

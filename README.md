@@ -694,7 +694,40 @@ class main(APIView):
         return render(request, 'kinsta/main.html', context=dict(feeds=feed_list, user = login_user)) # 추가
 ```
 
+> kinsta/main.html 에서 user 정보 쓰는 곳 변경
+```
+{{ user.nickname }}
+{{ user.profile_img }}
+```
 
+### 26. 로그아웃 기능
+> views.py에서 logout 기능
+
+세션 삭제
+```
+class logout(APIView):
+    def get(self, request):
+        # 세션 삭제
+        request.session.clear()
+        print("세션 삭제")        
+        return render(request, "user/login.html")
+```
+
+main 접속할 때 세션 존재 확인
+> content/views.py
+```
+class main(APIView):
+    def get(self, request):
+        try:
+            user_email = request.session['email']
+        except KeyError:
+            print("세션 비어있음")
+            return render(request, 'user/login.html')
+```
+
+### 27. 내 프로필 페이지
+
+### 28.
 
 
 <hr/>
