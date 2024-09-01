@@ -12,12 +12,17 @@ body {
 .nav-item {
     margin-bottom: 25px;
 }
-.flex-column{
-    padding-top: 30px;
-    height: 100vh;
-    border-right:solid;
-}
 
+.k_nav{
+    position: fixed;
+    left:10px;
+    width: 23%;
+    height: 100vh;
+    padding-top: 30px;
+    /* border-right:solid;
+    border-color: rgb(219, 219, 219); */
+    box-shadow: 1px 0 0 0 rgb(219, 219, 219);
+}
 
 .fill_icon {
     font-variation-settings: 'FILL' 1;

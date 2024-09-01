@@ -17,6 +17,7 @@ class test(APIView):
 
 class main(APIView):
     def get(self, request):
+        print("main 접속")
         feed_list = Feed.objects.all().order_by('-id') # select * from content_feed
                 
         #
@@ -75,4 +76,18 @@ class upload_feed(APIView):
     
 class profile(APIView):
     def get(self, request): # get 요청이 왔을 때
-        return render(request, "content/profile.html")
+        print("profile 접속")
+        try:
+            user_email = request.session['email']
+        except KeyError:
+            print("세션 비어있음")
+            return render(request, 'user/login.html')              
+        
+        login_user = user.objects.filter(user_email = user_email).first() # 유저 정보
+        print("유저 이름 :", login_user.user_name)
+        print("유저 이메일 :", login_user.user_email)
+        print("유저 닉네임 :", login_user.user_nickname)
+        #
+        
+        # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
+        return render(request, 'content/profile.html', context=dict(user = login_user))
