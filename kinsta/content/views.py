@@ -72,3 +72,7 @@ class upload_feed(APIView):
                             like_count = 0)
 
         return Response(status=200)
+    
+class profile(APIView):
+    def get(self, request): # get 요청이 왔을 때
+        return render(request, "content/profile.html")

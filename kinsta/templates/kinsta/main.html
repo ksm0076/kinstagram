@@ -17,179 +17,185 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/main_style.css' %}?after">
+    <link rel="stylesheet" href="{% static 'css/main_style.css' %}?afters">
     <!-- <link rel="stylesheet" href="css\styles.css"> -->
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 </head>
-<body>
-    <!-- 상단바 -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed; width:100%;">
-        <div class="container-fluid" style=" justify-content: space-between;">
-            <!-- 로고 -->
-            <div>
-                <a class="navbar-brand Logo" style="font-size:30px;" href="/main">KInstagram</a>
+
+<body style="display: flex; justify-content: center;">
+    <!-- 네비바 -->
+    <div style="position: fixed; left:10px; width: 23%">
+        <ul class="nav flex-column">
+            <div class="container-fluid">
+                <!-- 로고 -->
+                <li class="nav-item" style="margin-bottom:30px;">
+                    <a class="navbar-brand Logo" style="font-size:30px;" href="/main">KInstagram</a>
+                </li>
+                <!-- 아이콘 -->
+                <li class="nav-item">
+                    <span class="material-symbols-outlined fill_icon"> home </span>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-outlined">search</span>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-outlined"> send </span>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-outlined"> explore </span>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-outlined"> favorite </span>
+                </li>
+                <li class="nav-item">
+                    <span id="nav_add_box" class="material-symbols-outlined"> add_box </span>
+                </li>
+                <li class="nav-item">
+                    <img id="profile" src="{% get_media_prefix %}{{user.profile_img}}"
+                    class="material-symbols-outlined"
+                    style="border-radius: 50%;
+                            width: 30px;
+                            height: 30px;
+                            object-fit: cover;"
+                    onclick="location.href = '/content/profile'">
+                </li>
             </div>
-            <!-- 검색칸 -->
-            <div>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                </form>
+        </ul>
+    </div>
+    <!-- 왼쪽(피드) -->
+    <div class="left_part">
+        {% if feeds %}
+        {% for feed in feeds %}
+        <div class="feed">
+            <!-- 사용자정보 -->
+            <div class="profile_section">
+                <div>
+                    <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_image}}">
+                </div>
+                <div class="user_id">
+                    {{feed.user_id}}
+                </div>
             </div>
-            <!-- 아이콘 -->
-            <div style="display: flex;">
-                <span class="material-symbols-outlined fill_icon"> home </span>
-                <span class="material-symbols-outlined"> send </span>
-                <span class="material-symbols-outlined"> explore </span>
-                <span class="material-symbols-outlined"> favorite </span>
-                <span id="nav_add_box" class="material-symbols-outlined"> add_box </span>
-                <img id="profile" src="{% get_media_prefix %}{{user.profile_img}}"
-                class="material-symbols-outlined"
-                style="border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                object-fit: cover;"></span>
+            <!-- 사진 올리는 부분 -->
+            <div class="photo_section">
+                <img src="{% get_media_prefix %}{{feed.image}}">
+            </div>
+            <!-- 아이콘 부분 -->
+            <div class="icon_section">
+                <div>
+                    <span class="material-symbols-outlined">favorite</span>
+                    <span class="material-symbols-outlined">chat_bubble</span>
+                    <span class="material-symbols-outlined"> send </span>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined"> bookmark </span>
+                </div>
+            </div>
+            <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
+                <!-- 좋아요 수 -->
+                <div>
+                    <b>좋아요 {{feed.like_count}}개</b>
+                </div>
+                <!-- 작성자, 작성자의 말 -->
+                <div style="display:flex;">
+                    <div>
+                        <b>{{feed.user_id}}</b>
+                    </div>
+                    <div style="margin-left:5px;">
+                        {{feed.content}}
+                    </div>
+                </div>
+                <!-- 댓글 -->
+                <div style="color:rgb(131, 131, 127)">
+                    댓글 5258개 모두 보기
+                </div>
+                <!-- 댓글 입력창 -->
+                <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
+                    <input type="email" class="form-control" placeholder="댓글 달기..."
+                        style="box-shadow:none; font-size:14px; border:none">
+                </div>
+            </div>
+            <hr style="margin-bottom: 0px;">
+        </div>
+        {%endfor%}
+        {% else %}
+        <div>비어있습니다.</div>
+        {% endif %}
+
+    </div>
+    <!-- 오른쪽(추천) -->
+    <div class="right_part">
+        <!-- 내 정보 -->
+        <div style="display:flex; justify-content: space-between;">
+            <div class="profile_section">
+                <img id="user_profile" class="profile_image" src="{% get_media_prefix %}{{user.profile_img}}">
+                <div>
+                    <div id='my_nickname' class="user_id">{{user.user_nickname}}</div>
+                    <div style="margin-left: 10px; color:rgb(117, 111, 111)">
+                        {{ user.user_name }}
+                    </div>
+                </div>
+            </div>
+            <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
+                <a id="log_out" onclick="location.href = '/user/logout'" class="link_style">로그아웃</a>
             </div>
         </div>
-    </nav>
-    <!-- 왼쪽 오른쪽 -->
-    <div style="display: flex; justify-content: center; padding-top:65px;">
-
-        <!-- 왼쪽(피드) -->
-        <div class="left_part">
-            {% if feeds %}
-            {% for feed in feeds %}
-            <div class="feed">
-                <!-- 사용자정보 -->
-                <div class="profile_section">
-                    <div>
-                        <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_image}}">
-                    </div>
-                    <div class="user_id">
-                        {{feed.user_id}}
-                    </div>
+        <hr>
+        <!-- 회원 추천 -->
+        <div>
+            <div>
+                <div style="display:flex; justify-content: space-between;
+                    color:rgb(117, 111, 111); font-weight: bold;
+                    margin-top:-7px; margin-bottom:5px;">
+                    회원님을 위한 추천
+                    <a class="link_style" style="color:black;">모두 보기</a>
                 </div>
-                <!-- 사진 올리는 부분 -->
-                <div class="photo_section">
-                    <img src="{% get_media_prefix %}{{feed.image}}">
-                </div>
-                <!-- 아이콘 부분 -->
-                <div class="icon_section">
-                    <div>
-                        <span class="material-symbols-outlined">favorite</span>
-                        <span class="material-symbols-outlined">chat_bubble</span>
-                        <span class="material-symbols-outlined"> send </span>
-                    </div>
-                    <div>
-                        <span class="material-symbols-outlined"> bookmark </span>
-                    </div>
-                </div>
-                <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
-                    <!-- 좋아요 수 -->
-                    <div>
-                        <b>좋아요 {{feed.like_count}}개</b>
-                    </div>
-                    <!-- 작성자, 작성자의 말 -->
-                    <div style="display:flex;">
-                        <div>
-                            <b>{{feed.user_id}}</b>
-                        </div>
-                        <div style="margin-left:5px;">
-                            {{feed.content}}
-                        </div>
-                    </div>
-                    <!-- 댓글 -->
-                    <div style="color:rgb(131, 131, 127)">
-                        댓글 5258개 모두 보기
-                    </div>
-                    <!-- 댓글 입력창 -->
-                    <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
-                        <input type="email" class="form-control" placeholder="댓글 달기..."
-                            style="box-shadow:none; font-size:14px; border:none">
-                    </div>
-                </div>
-                <hr style="margin-bottom: 0px;">
             </div>
-            {%endfor%}
-            {% else %}
-            <div>비어있습니다.</div>
-            {% endif %}
-
-        </div>
-        <!-- 오른쪽(추천) -->
-        <div class="right_part">
-            <!-- 내 정보 -->
+            <!-- 추천 리스트 -->
             <div style="display:flex; justify-content: space-between;">
                 <div class="profile_section">
-                    <img id = "user_profile" class="profile_image"
-                        src="{% get_media_prefix %}{{user.profile_img}}">
+                    <img class="profile_image"
+                        src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
                     <div>
-                        <div id='my_nickname' class="user_id">{{user.user_nickname}}</div>
+                        <div class="user_id">
+                            aaa123
+                        </div>
                         <div style="margin-left: 10px; color:rgb(117, 111, 111)">
-                            {{ user.user_name }}
+                            회원님을 위한 추천
                         </div>
                     </div>
                 </div>
                 <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                    <a id="log_out" onclick="location.href = '/user/logout'" class="link_style">로그아웃</a>
+                    <a href="" class="link_style">팔로우</a>
                 </div>
             </div>
-            <hr>
-            <!-- 회원 추천 -->
-            <div>
-                <div>
-                    <div style="display:flex; justify-content: space-between;
-                    color:rgb(117, 111, 111); font-weight: bold;
-                    margin-top:-7px; margin-bottom:5px;">
-                        회원님을 위한 추천
-                        <a class="link_style" style="color:black;">모두 보기</a>
-                    </div>
-                </div>
-                <!-- 추천 리스트 -->
-                <div style="display:flex; justify-content: space-between;">
-                    <div class="profile_section">
-                        <img class="profile_image"
-                            src="https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp">
-                        <div>
-                            <div class="user_id">
-                                aaa123
-                            </div>
-                            <div style="margin-left: 10px; color:rgb(117, 111, 111)">
-                                회원님을 위한 추천
-                            </div>
+            <div style="display:flex; justify-content: space-between;">
+                <div class="profile_section">
+                    <img class="profile_image" src="/media/default_profile.jpg">
+                    <div>
+                        <div class="user_id">
+                            bbb456
+                        </div>
+                        <div style="margin-left: 10px; color:rgb(117, 111, 111)">
+                            회원님을 위한 추천
                         </div>
                     </div>
-                    <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                        <a href="" class="link_style">팔로우</a>
-                    </div>
                 </div>
-                <div style="display:flex; justify-content: space-between;">
-                    <div class="profile_section">
-                        <img class="profile_image" src="/media/default_profile.jpg">
-                        <div>
-                            <div class="user_id">
-                                bbb456
-                            </div>
-                            <div style="margin-left: 10px; color:rgb(117, 111, 111)">
-                                회원님을 위한 추천
-                            </div>
-                        </div>
-                    </div>
-                    <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
-                        <a href="" class="link_style">팔로우</a>
-                    </div>
+                <div style="color:rgb(1, 102, 253); font-weight: bold; align-self: center;">
+                    <a href="" class="link_style">팔로우</a>
                 </div>
-            </div>
-            <div style="color:rgb(117, 111, 111); padding-top:25px;">
-                소개. 도움말. 홍보 센터. API. 채용 정보.
-                개인정보처리방침. 약관. 위치. 언어. <br><br>
-                © 2024 Instagram from Meta
             </div>
         </div>
+        <div style="color:rgb(117, 111, 111); padding-top:25px;">
+            소개. 도움말. 홍보 센터. API. 채용 정보.
+            개인정보처리방침. 약관. 위치. 언어. <br><br>
+            © 2024 Instagram from Meta
+        </div>
     </div>
+
 
     <!-- 게시물 추가 기능 -->
     <div class="modal_overlay">
@@ -359,7 +365,7 @@
             )
             console.log("클릭--");
         });
-        
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

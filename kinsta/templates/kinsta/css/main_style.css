@@ -9,6 +9,16 @@ body {
     /* overflow: hidden; */
 }
 
+.nav-item {
+    margin-bottom: 25px;
+}
+.flex-column{
+    padding-top: 30px;
+    height: 100vh;
+    border-right:solid;
+}
+
+
 .fill_icon {
     font-variation-settings: 'FILL' 1;
 }
@@ -17,6 +27,7 @@ body {
     width: 400px;
     height: 2000px;
     background-color: white;
+    padding: 15px;
 }
 
 .right_part {
@@ -25,7 +36,7 @@ body {
     position: fixed;
     left: 74%;
     margin-left: 10px;
-    padding: 10px;
+    padding: 15px;
     font-size: 14px;
 }
 
