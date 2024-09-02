@@ -701,19 +701,18 @@ class main(APIView):
 ```
 
 ### 26. 로그아웃 기능
-> views.py에서 logout 기능
-
-세션 삭제
+> user/views.py
+* 세션 삭제
 ```
 class logout(APIView):
     def get(self, request):
         # 세션 삭제
         request.session.clear()
-        print("세션 삭제")        
+        print("세션 삭제")
         return render(request, "user/login.html")
 ```
 
-main 접속할 때 세션 존재 확인
+* main 접속할 때 세션 존재 확인
 > content/views.py
 ```
 class main(APIView):
@@ -727,8 +726,33 @@ class main(APIView):
 
 ### 27. 내 프로필 페이지
 
-### 28.
+* 프로필 사진 클릭시 파일 탐색기 열기
+> content/profile.html
+```
+$('#upload_profile').click(function () {
+    $('#change_profile').click();
+})
+```
 
+* 업로드 된 사진 처리
+> content/profile.html
+```
+var inputFile = $('#change_profile');
+var files = inputFile[0].files;
+
+let fd = new FormData();
+fd.append('profile_img', files[0]);
+```
+
+* view에서 처리
+```
+u = get_object_or_404(user, user_email = request.session["email"])        
+u.profile_img = uuid_name
+u.save()
+```
+
+
+### 28.
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM

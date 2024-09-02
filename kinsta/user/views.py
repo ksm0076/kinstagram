@@ -33,6 +33,8 @@ class signup(APIView):
         
         return JsonResponse({'success' : True})
 
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password
 
 class login(APIView):
     def get(self, request):
@@ -43,7 +45,8 @@ class login(APIView):
         user_password = request.data.get("user_password")
         
         login_user = user.objects.filter(user_email = user_email).first()
-        
+                
+        ##
         if login_user == None:
             print("존재하지 않는 사용자 접근")
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
@@ -51,13 +54,12 @@ class login(APIView):
         
         # 로그인 성공
         if login_user.check_password(user_password):
+            # 세션 생성
             request.session['email'] = user_email
             return JsonResponse({"success" : True})
         else:
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
-
-from django.contrib.auth import logout
 
 class logout(APIView):
     def get(self, request):
