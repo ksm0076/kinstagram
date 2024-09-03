@@ -75,10 +75,10 @@
             <div class="profile_section" style="justify-content: space-between;">
                 <div style="display: flex; align-items: center;">
                     <div>
-                        <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_image}}">
+                        <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_img}}">
                     </div>
                     <div class="user_id">
-                        {{feed.user_id}}
+                        {{feed.nickname}}
                     </div>
                 </div>
                 <div>
@@ -103,12 +103,12 @@
             <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
                 <!-- 좋아요 수 -->
                 <div>
-                    <b>좋아요 {{feed.like_count}}개</b>
+                    <b>좋아요 12개</b>
                 </div>
                 <!-- 작성자, 작성자의 말 -->
                 <div style="display:flex;">
                     <div>
-                        <b>{{feed.user_id}}</b>
+                        <b>{{feed.nickname}}</b>
                     </div>
                     <div style="margin-left:5px;">
                         {{feed.content}}
@@ -299,7 +299,7 @@
                             <div class="mb-3">
                                 <div class="profile_section" style="padding: 10px;">
                                     <img class="profile_image" src="{% get_media_prefix %}{{user.profile_img}}">                                
-                                    <label id='my_nickname' style="margin-left: 10px; font-weight: bold; font-size: 14px;">ksm1236</label>
+                                    <label id='my_nickname' style="margin-left: 10px; font-weight: bold; font-size: 14px;">{{ user.user_nickname }}</label>
                                 </div>
                                 <textarea class="form-control" id="feed_input_content" rows="7"
                                 style="padding: 1px; resize: none; border: none; outline: none; box-shadow: none;
@@ -337,20 +337,13 @@
         // 동적으로 생성된 버튼이기 때문에 $(document).on으로 접근
         $(document).on('click', '#feed_create_button', function () {
             let file = files[0];
-            let img_name = file.name;
             let content = $('#feed_input_content').val();
-            let user_id = "{{ user.user_nickname }}";
-            let profile_img = "{{ user.profile_img }}";
 
             // alert('내용: ' + content + '\n아이디: ' + user_id);
 
             let fd = new FormData();
             fd.append('file', file);
-            fd.append('img_name', img_name)
             fd.append('content', content);
-            fd.append('user_id', user_id);
-            profile_img = profile_img.replace('/media', '');
-            fd.append('profile_img', profile_img);
 
             /// /content/upload url로 접속하면 실행되는 함수로로 넘기기(view)
             $.ajax({

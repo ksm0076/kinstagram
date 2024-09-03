@@ -20,22 +20,34 @@ class test(APIView):
 class main(APIView):
     def get(self, request):
         print("main 접속")
-        feed_list = Feed.objects.all().order_by("-id")  # select * from content_feed
+        feed_object_list = Feed.objects.all().order_by("-id")  # select * from content_feed
+        feed_go = []
+        
+        for feed in feed_object_list:
+            upload_user = user.objects.filter(user_email = feed.user_email).first()
+            print("업로드 유저 :", upload_user)
+                        
+            feed_go.append(dict(
+                image = feed.image,
+                content = feed.content,
+                nickname = upload_user.user_nickname,
+                profile_img = upload_user.profile_img,
+            ))
 
         #
         try:
-            user_email = request.session["email"]
+            login_email = request.session["email"]
         except KeyError:
             print("세션 비어있음")
             return render(request, "user/login.html")
 
-        login_user = user.objects.filter(user_email=user_email).first()  # 유저 정보
+        login_user = user.objects.filter(user_email=login_email).first()  # 유저 정보
         print("유저 닉네임 :", login_user.user_nickname)
         #
 
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(
-            request, "kinsta/main.html", context=dict(feeds=feed_list, user=login_user)
+            request, "kinsta/main.html", context=dict(feeds=feed_go, user=login_user)
         )
 
 
@@ -46,8 +58,7 @@ class main(APIView):
 
 class upload_feed(APIView):
     def post(self, request):
-        # file = request.data.get('file')
-
+        
         file = request.FILES["file"]
 
         # 파일 이름을 고유한 id로 변경 (프로그램에서 다루기 쉽게)
@@ -55,29 +66,22 @@ class upload_feed(APIView):
         # /MEDIA_ROOT/uuid_name로 이미지 저장
         save_path = os.path.join(MEDIA_ROOT, uuid_name)
 
-        # 파일 읽기
+        # 파일 저장
         with open(save_path, "wb+") as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
 
         content = request.data.get("content")
-        user_id = request.data.get("user_id")
-        profile_img = request.data.get("profile_img")
-
         img_location = uuid_name
 
         print(file)
         print(uuid_name)
         print(content)
-        print(user_id)
-        print(profile_img)
 
         Feed.objects.create(
-            profile_image=profile_img,
-            user_id=user_id,
             image=img_location,
             content=content,
-            like_count=0,
+            user_email = request.session['email']
         )
 
         return Response(status=200)

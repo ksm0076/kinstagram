@@ -750,9 +750,15 @@ u = get_object_or_404(user, user_email = request.session["email"])
 u.profile_img = uuid_name
 u.save()
 ```
+<details>
+<summary>프로필 변경 과정</summary>
 
+1. (사진을 업로드 하는 요소)를 display: none으로 보이지 않게 해둠
+2. 이미지를 누르면 (사진 업로드 요소)가 클릭되게 설정
+3. (사진 업로드 요소)가 change 되면 실행되는 함수 작성
+</details>
 
-### 28.
+### 28. 좋아요, 북마크 
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
