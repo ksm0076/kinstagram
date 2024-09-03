@@ -42,10 +42,13 @@
                     <span class="material-symbols-outlined">search</span>
                 </li>
                 <li class="nav-item">
-                    <span class="material-symbols-outlined"> send </span>
+                    <span class="material-symbols-outlined"> explore </span>
                 </li>
                 <li class="nav-item">
-                    <span class="material-symbols-outlined"> explore </span>
+                    <span class="material-symbols-outlined"> movie </span>
+                </li>
+                <li class="nav-item">
+                    <span class="material-symbols-outlined"> send </span>
                 </li>
                 <li class="nav-item">
                     <span class="material-symbols-outlined"> favorite </span>
@@ -69,17 +72,22 @@
         {% for feed in feeds %}
         <div class="feed">
             <!-- 사용자정보 -->
-            <div class="profile_section">
-                <div>
-                    <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_image}}">
+            <div class="profile_section" style="justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                    <div>
+                        <img class="profile_image" src="{% get_media_prefix %}{{feed.profile_image}}">
+                    </div>
+                    <div class="user_id">
+                        {{feed.user_id}}
+                    </div>
                 </div>
-                <div class="user_id">
-                    {{feed.user_id}}
+                <div>
+                    <span class="material-symbols-outlined">more_horiz</span>
                 </div>
             </div>
             <!-- 사진 올리는 부분 -->
             <div class="photo_section">
-                <img src="{% get_media_prefix %}{{feed.image}}">
+                <img src="{% get_media_prefix %}{{feed.image}}" style="outline: rgb(207, 197, 197) solid 1px">
             </div>
             <!-- 아이콘 부분 -->
             <div class="icon_section">
@@ -273,6 +281,9 @@
             files = e.dataTransfer.files;
             console.log("??? : " + files[0]);
 
+            let a = '{{user.user_nickname}}';
+            console.log("유저 닉네임 : ", a)
+
             if (files.length > 1) {
                 alert('하나만 올려라.');
                 return;
@@ -328,8 +339,8 @@
             let file = files[0];
             let img_name = file.name;
             let content = $('#feed_input_content').val();
-            let user_id = $('#my_nickname').text();
-            let profile_img = $("#user_profile").attr('src');
+            let user_id = "{{ user.user_nickname }}";
+            let profile_img = "{{ user.profile_img }}";
 
             // alert('내용: ' + content + '\n아이디: ' + user_id);
 
