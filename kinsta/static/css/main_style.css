@@ -4,11 +4,6 @@
     font-style: normal;
 }
 
-body {
-    /* background-color: rgb(211, 207, 207); */
-    /* overflow: hidden; */
-}
-
 .nav-item {
     margin-bottom: 25px;
 }
@@ -74,19 +69,21 @@ body {
 
 .photo_section {
     text-align: center;
+    padding-top:6px;
+    
 }
 
 .photo_section img {
     width: 100%;
     height: auto;
+    outline: rgb(207, 197, 197) solid 1px;
+    border-radius: 1%;
 }
 
 .icon_section {
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-top: 10px;
 
 }
 

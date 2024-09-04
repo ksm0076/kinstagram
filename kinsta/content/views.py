@@ -2,13 +2,13 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Feed
+from .models import *
+from user.models import user
 
 from uuid import uuid4
 import os
 from kinsta.settings import MEDIA_ROOT
 
-from user.models import user
 
 
 # Create your views here.
@@ -21,19 +21,32 @@ class main(APIView):
     def get(self, request):
         print("main 접속")
         feed_object_list = Feed.objects.all().order_by("-id")  # select * from content_feed
-        feed_go = []
+        feed_list = []
         
         for feed in feed_object_list:
             upload_user = user.objects.filter(user_email = feed.user_email).first()
-            print("업로드 유저 :", upload_user)
-                        
-            feed_go.append(dict(
+            # print("피드 아이디 :", feed.id)
+            
+            # 댓글들이 담겨있는 리스트
+            comment_object_list = comment.objects.filter(feed_id = feed.id)
+            comment_list = []
+            
+            for each_comment in comment_object_list:
+                comment_user = user.objects.filter(user_email = each_comment.email).first()
+                comment_list.append(dict(
+                    nickname = each_comment.nickname,
+                    content = each_comment.comment_content,
+                    profile_img = comment_user.profile_img
+                ))
+            #
+                    
+            feed_list.append(dict(
                 image = feed.image,
                 content = feed.content,
                 nickname = upload_user.user_nickname,
                 profile_img = upload_user.profile_img,
+                comment_list = comment_list
             ))
-
         #
         try:
             login_email = request.session["email"]
@@ -47,7 +60,7 @@ class main(APIView):
 
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(
-            request, "kinsta/main.html", context=dict(feeds=feed_go, user=login_user)
+            request, "kinsta/main.html", context=dict(feeds=feed_list, user=login_user)
         )
 
 
@@ -133,3 +146,15 @@ class profile(APIView):
         u.save()
 
         return render(request, "content/profile.html")
+
+class upload_comment(APIView):
+    def post(self, request):
+        feed_id = request.data.get('feed_id')
+        comment_content = request.data.get('comment_content')
+        email = request.session["email"]
+        
+        comment.objects.create(feed_id = feed_id,
+                               email = email,
+                               comment_content = comment_content)
+        
+        return Response(status=200)

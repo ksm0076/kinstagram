@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/main_style.css' %}?after">
+    <link rel="stylesheet" href="{% static 'css/main_style.css' %}?afters">
     <!-- <link rel="stylesheet" href="css\styles.css"> -->
 
     <!-- JQuery -->
@@ -87,7 +87,7 @@
             </div>
             <!-- 사진 올리는 부분 -->
             <div class="photo_section">
-                <img src="{% get_media_prefix %}{{feed.image}}" style="outline: rgb(207, 197, 197) solid 1px">
+                <img src="{% get_media_prefix %}{{feed.image}}">
             </div>
             <!-- 아이콘 부분 -->
             <div class="icon_section">
@@ -97,7 +97,7 @@
                     <span class="material-symbols-outlined"> send </span>
                 </div>
                 <div>
-                    <span class="material-symbols-outlined"> bookmark </span>
+                    <span class="material-symbols-outlined" style="margin-right: -6px;"> bookmark </span>
                 </div>
             </div>
             <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
@@ -116,7 +116,16 @@
                 </div>
                 <!-- 댓글 -->
                 <div style="color:rgb(131, 131, 127)">
-                    댓글 5258개 모두 보기
+                    {% for comment in feed.comment_list %}
+                    <div>
+                        <img src="{% get_media_prefix %}{{comment.profile_img}}"
+                            style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+                        <b>{{comment.nickname}}</b> {{comment.content}}
+                    </div>
+                    {% endfor %}
+                    <div>
+                        댓글 {{ feed.comment_list|length }}개 모두 보기
+                    </div>
                 </div>
                 <!-- 댓글 입력창 -->
                 <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
@@ -124,7 +133,7 @@
                         style="box-shadow:none; font-size:14px; border:none">
                 </div>
             </div>
-            <hr style="margin-bottom: 5px;">
+            <hr style="margin-bottom: 5px; margin-top: 5px;">
         </div>
         {%endfor%}
         {% else %}

@@ -200,21 +200,9 @@ ORM : Object Relational Mapping
 
 ### 11. 피드에 대한 필드 파악
 #### 피드
-|**ID**|**프로필사진**|**작성자이름**|**올린사진**|**글내용**|댓글|좋아요수|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|o|o|o|o|o|-> 참조|-> 참조|
-
-#### 댓글
-|**피드_ID**|**댓글작성자**|**댓글내용**|
+|**작성자 닉네임**|**올린사진**|**글내용**|
 |:-:|:-:|:-:|
 |o|o|o|
-
-#### 좋아요
-|**피드_ID**|**좋아요한사람**|**좋아요여부**|
-|:-:|:-:|:-:|
-|o|o|o|
-
-(좋아요여부 : 취소 기능을 위함)
 
 ### 12. 모델 작성
 > kinsta/content/models.py
@@ -389,8 +377,6 @@ $(document).on('click', '#feed_create_button', function () {
     let file = files[0];
     let img_name = file.name;
     let content = $('#feed_input_content').val();
-    let user_id = $('#my_id').text();
-    let profile_img = "";
 
     alert('내용: ' + content + '\n아이디: ' + user_id);
     
@@ -399,8 +385,6 @@ $(document).on('click', '#feed_create_button', function () {
     fd.append('file', file);
     fd.append('img_name', img_name)
     fd.append('content', content);
-    fd.append('user_id', user_id);
-    fd.append('profile_img', profile_img);
 
     // /content/upload url로 접속하면 실행되는 함수로로 넘기기(view)
     $.ajax({
@@ -758,7 +742,36 @@ u.save()
 3. (사진 업로드 요소)가 change 되면 실행되는 함수 작성
 </details>
 
-### 28. 좋아요, 북마크 
+### 28. 댓글 기능
+|**피드_ID**|**댓글작성자**|**댓글내용**|
+|:-:|:-:|:-:|
+|1|abc@google.com|댓글내용|
+
+* model 작성 : 테이블 생성
+* view 작성 : DB에 올려줄 레코드 생성
+> content/views.py
+```
+class main():
+    # 0. feed_list를 main.html에 보내줄 때 feed_list의 feed 내용에 comment_list를 담아줌
+
+    # 1. comment 테이블에서 feed_id가 일치 하는 것들을 comment_list로 가져옴
+    # 1.5. comment 테이블에는 프로필 사진이 없으므로 user테이블에서 가져와야함
+    # (유저 테이블에서 가져온 프로필 사진의 정보를 담은 객체를 새로 만들어서 리스트로 만듬)
+    # 2. comment_list의  (각 comment) = (닉네임, 프로필 사진, 댓글 내용)
+    # 3. (각 comment)를 리스트에 담아서 feed 에 담아줌
+```
+
+### 29. 좋아요 기능
+|**피드_ID**|**좋아요한사람**|**좋아요여부**|
+|:-:|:-:|:-:|
+|1|abc@google.com|Y|
+
+
+
+
+### 30. 북마크 기능
+|**피드_ID**|**북마크한사람**|**북마크여부**|
+|:-:|:-:|:-:|
 
 <hr/>
 https://youtu.be/M8UPyeF5DfM
