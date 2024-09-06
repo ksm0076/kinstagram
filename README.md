@@ -762,8 +762,53 @@ class main():
 ```
 
 ### 28.5. 댓글 작성 기능
-작성하고 있는 피드의 댓글에 따라 comment 테이블에 올라가는 feed_id가 정해져야함.
+댓글을 작성하고 있는 피드에 따라 comment 테이블에 올라가는 feed_id가 정해져야함.
+> main.html
+* feed_id 속성을 추가해서 스크립트에서 사용할 수 있게 함
+```
+<!-- 댓글 입력창 -->
+<div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
+    <input id="comment_area" class="form-control" placeholder="댓글 달기..."
+        style="box-shadow:none; font-size:14px; border:none"
+        autocomplete="off"
+        feed_id="{{feed.feed_id}}"
+        onkeypress="upload_comment(event, this)">
+</div>
+```
 
+* 자신을 부른 요소의 속성을 확인해서 feed_id 확인
+```
+function upload_comment(e, element){
+    if (e.code=='Enter'){
+
+        let id = $(element).attr("feed_id");
+        let content = $(element).val();
+
+        $.ajax({
+            url: "/content/comment",
+            data: {
+                feed_id: id,
+                comment_content: content
+            },
+            method: "POST",
+            // dataType: 'json',
+
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function (request, status, error) {
+                console.log("에러");
+            },
+            complete: function () {
+                console.log("ajax 완료");
+                window.location.reload();
+            }
+        })
+    }
+
+    
+}
+```
 
 ### 29. 좋아요 기능
 |**피드_ID**|**좋아요한사람**|**좋아요여부**|
