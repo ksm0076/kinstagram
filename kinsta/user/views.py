@@ -56,7 +56,7 @@ class login(APIView):
         if login_user.check_password(user_password):
             # 세션 생성
             request.session['email'] = user_email
-            return JsonResponse({"success" : True})
+            return JsonResponse({"success" : login_user.user_nickname})
         else:
             # return JsonResponse({"success" : False, "error" : "회원정보가 잘못되었습니다."})
             return JsonResponse({"success" : False, "error" : "비밀번호가 잘못되었습니다."})
