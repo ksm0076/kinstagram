@@ -76,7 +76,7 @@ class upload_feed(APIView):
         file = request.FILES["file"]
 
         # 파일 이름을 고유한 id로 변경 (프로그램에서 다루기 쉽게)
-        uuid_name = uuid4().hex
+        uuid_name = uuid4().hex + ".jpg"
         # /MEDIA_ROOT/uuid_name로 이미지 저장
         save_path = os.path.join(MEDIA_ROOT, uuid_name)
 
@@ -98,6 +98,17 @@ class upload_feed(APIView):
             user_email = request.session['email']
         )
 
+        return Response(status=200)
+
+# 피드 삭제
+class DeleteFeed(APIView):
+    def post(self, request):
+        feed_id = request.data.get('feed_id')
+        try:
+            record_list = Feed.objects.filter(id = feed_id)
+            record_list.delete()
+        except:
+            print("삭제 에러 발생")
         return Response(status=200)
 
 from django.shortcuts import get_object_or_404
@@ -131,7 +142,7 @@ class profile(APIView):
         print("변경될 이미지 :", profile_img)
 
         # 랜덤 파일명
-        uuid_name = uuid4().hex
+        uuid_name = uuid4().hex + ".jpg"
         # /media에 저장
         save_path = os.path.join(MEDIA_ROOT, uuid_name)
 

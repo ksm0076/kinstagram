@@ -32,7 +32,7 @@
             <div class="container-fluid">
                 <!-- 로고 -->
                 <li class="nav-item" style="margin-bottom:30px;">
-                    <a class="navbar-brand Logo" style="font-size:30px;" href="/main">KInstagram</a>
+                    <a class="navbar-brand Logo" style="font-size:25px;" href="/main">KInstagram</a>
                 </li>
                 <!-- 아이콘 -->
                 <li class="nav-item">
@@ -81,9 +81,23 @@
                         {{feed.nickname}}
                     </div>
                 </div>
-                <div>
-                    <span class="material-symbols-outlined">more_horiz</span>
+                <div style="text-align: center;">
+                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        style="background-color: white; border: none;">
+                        <span class="material-symbols-outlined">
+                            more_horiz</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" onclick="delete_feed(this)" feed_id={{feed.feed_id}}
+                                style="cursor: pointer;">
+                                게시물 삭제
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <!-- <div>
+                    <span class="material-symbols-outlined">more_horiz</span>
+                </div> -->
             </div>
             <!-- 사진 올리는 부분 -->
             <div class="photo_section">
@@ -119,24 +133,22 @@
                     {% for comment in feed.comment_list %}
                     <div>
                         <img src="{% get_media_prefix %}{{comment.profile_img}}"
-                            style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+                            style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover; margin-top: 7px;">
                         <b>{{comment.nickname}}</b> {{comment.content}}
                     </div>
                     {% endfor %}
-                    <div>
+                    <div style="cursor: pointer;">
                         댓글 {{ feed.comment_list|length }}개 모두 보기
                     </div>
                 </div>
                 <!-- 댓글 입력창 -->
                 <div style="color:rgb(131, 131, 127); margin-left:-4px; margin-right:-4px;">
                     <input id="comment_area" class="form-control" placeholder="댓글 달기..."
-                        style="box-shadow:none; font-size:14px; border:none"
-                        autocomplete="off"
-                        feed_id="{{feed.feed_id}}"
-                        onkeypress="upload_comment(event, this)">
+                        style="box-shadow:none; font-size:14px; border:none" autocomplete="off"
+                        feed_id="{{feed.feed_id}}" onkeypress="upload_comment(event, this)">
                 </div>
             </div>
-            <hr style="margin-bottom: 5px; margin-top: 5px;">
+            <hr style="margin-bottom: 10px; margin-top: 20px;">
         </div>
         {%endfor%}
         {% else %}
@@ -380,22 +392,16 @@
             )
             console.log("클릭-");
         });
-
-        // 댓글 업로드
-        function upload_comment(e, element){
-            if (e.code=='Enter'){
-
-                let id = $(element).attr("feed_id");
-                let content = $(element).val();
-
+        // 피드 삭제
+        function delete_feed(element) {
+            if (confirm("정말 삭제하시겠습니까?")) {
+                let feed_id = $(element).attr("feed_id");
                 $.ajax({
-                    url: "/content/comment",
+                    url: "/content/delete-feed",
                     data: {
-                        feed_id: id,
-                        comment_content: content
+                        feed_id: feed_id,
                     },
                     method: "POST",
-                    // dataType: 'json',
 
                     success: function (data) {
                         console.log("성공");
@@ -404,13 +410,47 @@
                         console.log("에러");
                     },
                     complete: function () {
-                        console.log("ajax 완료");
+                        console.log("delete_feed 실행");
                         window.location.reload();
                     }
                 })
             }
+        }
 
-            
+        // 댓글 업로드
+        function upload_comment(e, element) {
+            if (e.code == 'Enter') {
+
+                let id = $(element).attr("feed_id");
+                let content = $(element).val();
+                // console.log(e.target.attributes.getNamedItem('feed_id').value);
+                if (content.length > 0) {
+                    $.ajax({
+                        url: "/content/comment",
+                        data: {
+                            feed_id: id,
+                            comment_content: content
+                        },
+                        method: "POST",
+                        // dataType: 'json',
+
+                        success: function (data) {
+                            console.log("성공");
+                        },
+                        error: function (request, status, error) {
+                            console.log("에러");
+                        },
+                        complete: function () {
+                            console.log("ajax 완료");
+                            window.location.reload();
+                        }
+                    })
+                }
+
+
+            }
+
+
         }
     </script>
 

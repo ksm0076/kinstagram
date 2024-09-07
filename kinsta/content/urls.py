@@ -9,5 +9,6 @@ urlpatterns = [
     # path('main/', main.as_view(), name='main'),   # 8000/content/main 경로
     path('upload', upload_feed.as_view(), name='upload'), # 8000/content/upload 경로
     path('profile', profile.as_view(), name='profile'),
-    path('comment', upload_comment.as_view(), name='upload_comment')
+    path('comment', upload_comment.as_view(), name='upload_comment'),
+    path('delete-feed', DeleteFeed.as_view(), name='delete-feed'),
 ]

@@ -29,7 +29,7 @@
             <div class="container-fluid">
                 <!-- 로고 -->
                 <li class="nav-item" style="margin-bottom:30px;">
-                    <a class="navbar-brand Logo" style="font-size:30px;" href="/main">KInstagram</a>
+                    <a class="navbar-brand Logo" style="font-size:25px;" href="/main">KInstagram</a>
                 </li>
                 <!-- 아이콘 -->
                 <li class="nav-item">
@@ -257,7 +257,6 @@
                     console.log("에러");
                 },
                 complete: function () {
-                    console.log("ajax 완료");
                     window.location.reload();
                 }
             }
@@ -272,7 +271,6 @@
 
         $('#change_profile').change(function () {
 
-            alert('hi')
             var inputFile = $('#change_profile');
             var files = inputFile[0].files;
 
@@ -296,7 +294,6 @@
                     console.log("에러");
                 },
                 complete: function () {
-                    console.log("ajax 완료");
                     window.location.reload();
                 }
             }
