@@ -794,6 +794,8 @@ function upload_comment(e, element){
             // dataType: 'json',
 
             success: function (data) {
+                // 댓글 부분만 새로고침 (댓글을 표현하는 요소에 id 달아줘야함)
+                $("#feed_num_" + id).load(window.location.href + " #feed_num_" + id);
                 console.log("성공");
             },
             error: function (request, status, error) {
@@ -801,14 +803,14 @@ function upload_comment(e, element){
             },
             complete: function () {
                 console.log("ajax 완료");
-                window.location.reload();
+                <!-- window.location.reload(); -->
             }
         })
     }
 
     
 }
-```
+
 
 ### 29. 좋아요 기능
 |**피드_ID**|**좋아요한사람**|**좋아요여부**|

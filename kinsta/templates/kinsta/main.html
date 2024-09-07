@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <!-- 댓글 -->
-                <div style="color:rgb(131, 131, 127)">
+                <div id="feed_num_{{ feed.feed_id }}" style="color:rgb(131, 131, 127)">
                     {% for comment in feed.comment_list %}
                     <div>
                         <img src="{% get_media_prefix %}{{comment.profile_img}}"
@@ -435,6 +435,9 @@
                         // dataType: 'json',
 
                         success: function (data) {
+                            // 댓글 부분만 새로고침
+                            $("#feed_num_" + id).load(window.location.href + " #feed_num_" + id);
+                            $(element).val('');
                             console.log("성공");
                         },
                         error: function (request, status, error) {
@@ -442,7 +445,7 @@
                         },
                         complete: function () {
                             console.log("ajax 완료");
-                            window.location.reload();
+                            // window.location.reload();
                         }
                     })
                 }
