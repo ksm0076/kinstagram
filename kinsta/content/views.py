@@ -109,6 +109,7 @@ class DeleteFeed(APIView):
             record_list.delete()
         except:
             print("삭제 에러 발생")
+            return Response(status=500)
         return Response(status=200)
 
 from django.shortcuts import get_object_or_404

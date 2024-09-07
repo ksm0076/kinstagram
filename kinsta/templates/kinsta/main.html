@@ -81,16 +81,16 @@
                         {{feed.nickname}}
                     </div>
                 </div>
-                <div style="text-align: center;">
+                <div>
                     <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
                         style="background-color: white; border: none;">
                         <span class="material-symbols-outlined">
                             more_horiz</span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="min-width: auto; width: 100px;">
                         <li><a class="dropdown-item" onclick="delete_feed(this)" feed_id={{feed.feed_id}}
-                                style="cursor: pointer;">
-                                게시물 삭제
+                                style="cursor: pointer; color: red; text-align: center;">
+                                삭제
                             </a>
                         </li>
                     </ul>
