@@ -777,6 +777,7 @@ class main():
 ```
 
 * 자신을 부른 요소의 속성을 확인해서 feed_id 확인
+* 일부 영역만 새로고침 하는 방법 $("#id).load(window.location.href + " #id");
 ```
 function upload_comment(e, element){
     if (e.code=='Enter'){
@@ -807,16 +808,28 @@ function upload_comment(e, element){
             }
         })
     }
-
-    
 }
-
+```
 
 ### 29. 좋아요 기능
 |**피드_ID**|**좋아요한사람**|**좋아요여부**|
 |:-:|:-:|:-:|
-|1|abc@google.com|Y|
+|1|abc@google.com|true|
 
+* 피드에 좋아요 개수 출력하기
+> content/views.py
+```
+class main():
+    ###
+    like_object = like.objects.filter(feed_id = feed.id, is_like = True)
+    like_count = like_object.count()
+    
+    feed_list.append(dict(
+    ###
+    like_count = like_count,
+    ))
+
+```
 
 
 

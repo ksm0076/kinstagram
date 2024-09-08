@@ -31,6 +31,9 @@ class main(APIView):
             comment_object_list = comment.objects.filter(feed_id = feed.id)
             comment_list = []
             
+            like_object = like.objects.filter(feed_id = feed.id, is_like = True)
+            like_count = like_object.count()
+            
             for each_comment in comment_object_list:
                 comment_user = user.objects.filter(user_email = each_comment.email).first()
                 comment_list.append(dict(
@@ -46,7 +49,8 @@ class main(APIView):
                 nickname = upload_user.user_nickname,
                 profile_img = upload_user.profile_img,
                 feed_id = feed.id,
-                comment_list = comment_list
+                comment_list = comment_list,
+                like_count = like_count,
             ))
         #
         try:
@@ -173,3 +177,23 @@ class upload_comment(APIView):
                                nickname = login_user.user_nickname)
         
         return Response(status=200)
+    
+class TogleLike(APIView):
+    def post(self, requeset):
+        feed_id = requeset.data.get('feed_id')
+        is_like = requeset.data.get('is_like')
+        
+        if is_like == True:
+            is_like = False
+        else:
+            is_like = True
+            
+        email = requeset.session['email']
+        nickname = requeset.session['nickname']
+        
+        like.objects.create(
+            feed_id = feed_id,
+            email = email,
+            nickname = nickname,
+            is_like = is_like
+        )
