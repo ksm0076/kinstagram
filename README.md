@@ -846,6 +846,73 @@ color: red;">favorite</span>
 {% endif %}
 ```
 
+* 좋아요 누를 시 좋아요 개수, 아이콘 색칠 변화
+[커밋](https://github.com/ksm0076/kinstagram/commit/c1f15e86bfb22b7b37ea526208e59e25722e3df0)
+
+* 좋아요 동작 DB 연동
+> content/views.py
+```
+class TogleLike(APIView):
+    def post(self, requeset):
+        feed_id = requeset.data.get('feed_id')
+        is_like = requeset.data.get('is_like')
+        
+        if is_like == 'true':
+            is_like = False
+        else:
+            is_like = True
+        
+        email = requeset.session['email']
+        nickname = requeset.session['nickname']
+        
+        like_user = like.objects.filter(feed_id = feed_id, email = email).first()        
+        
+        # 좋아요 누른적이 없음
+        if like_user is None:
+            like.objects.create(
+                feed_id = feed_id,
+                email = email,
+                nickname = nickname,
+                is_like = is_like
+            )
+        # 좋아요 누른적이 있음
+        else:
+            if like_user.is_like:
+                like_user.is_like = False
+            else:
+                like_user.is_like = True
+                
+            like_user.save()                
+        
+        return Response(status=200)
+```
+
+> main.html
+```
+$.ajax({
+    url: "/content/toggle-like",
+    data: {
+        feed_id: id,
+        is_like: on,
+    },
+    method: "POST",
+
+    // processData: false, // 데이터를 쿼리스트링으로 변환하지 않음
+    // contentType: false,
+
+    success: function (data) {
+        console.log("성공");
+    },
+    error: function (request, status, error) {
+        console.log("에러");
+    },
+    complete: function () {
+        console.log("ajax 완료");
+    }
+}
+)
+```
+
 
 ### 30. 북마크 기능
 |**피드_ID**|**북마크한사람**|**북마크여부**|

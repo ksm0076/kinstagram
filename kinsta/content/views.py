@@ -188,17 +188,33 @@ class TogleLike(APIView):
         feed_id = requeset.data.get('feed_id')
         is_like = requeset.data.get('is_like')
         
-        if is_like == True:
+        if is_like == 'true':
             is_like = False
         else:
             is_like = True
-            
+        
         email = requeset.session['email']
         nickname = requeset.session['nickname']
         
-        like.objects.create(
-            feed_id = feed_id,
-            email = email,
-            nickname = nickname,
-            is_like = is_like
-        )
+        like_user = like.objects.filter(feed_id = feed_id, email = email).first()
+        
+        
+        # 좋아요 누른적이 없음
+        if like_user is None:
+            like.objects.create(
+                feed_id = feed_id,
+                email = email,
+                nickname = nickname,
+                is_like = is_like
+            )
+        # 좋아요 누른적이 있음
+        else:
+            if like_user.is_like:
+                like_user.is_like = False
+            else:
+                like_user.is_like = True
+                
+            like_user.save()
+                
+        
+        return Response(status=200)

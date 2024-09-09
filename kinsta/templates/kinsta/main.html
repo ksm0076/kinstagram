@@ -104,20 +104,16 @@
                 <img src="{% get_media_prefix %}{{feed.image}}">
             </div>
             <!-- 아이콘 부분 -->
-            <div class="icon_section" style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none">
+            <div class="icon_section"
+                style="-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none">
                 <div>
                     {% if feed.is_liked %}
                     <span id="like" class="material-symbols-outlined" style="font-variation-settings : 'FILL' 1;
-                        color: red;"
-                        feed_id={{feed.feed_id}}
-                        on = true
-                        onclick="like_click(this)">
+                        color: red;" feed_id={{feed.feed_id}} on=true onclick="like_click(this)">
                         favorite
                     </span>
                     {% else %}
-                    <span id="like" class="material-symbols-outlined"
-                        feed_id={{feed.feed_id}}
-                        on = false
+                    <span id="like" class="material-symbols-outlined" feed_id={{feed.feed_id}} on=false
                         onclick="like_click(this)">
                         favorite
                     </span>
@@ -470,11 +466,11 @@
 
         function like_click(element) {
             let id = $(element).attr("feed_id");
-            
+
             // 좋아요 여부
             let on = $(element).attr("on");
 
-            // 좋아요 개수            
+            // 좋아요 개수 (서버 거치지 않고 개수 변경 위함)      
             let like_count_id = 'like_count_' + id;
             like_num = $("#" + like_count_id).text();
             currunt_like_count = parseInt(like_num);
@@ -494,7 +490,33 @@
                 })
                 currunt_like_count++;
             }
+
+            // 좋아요 개수 변경 (서버 거치지 않음)
             $("#" + like_count_id).text(currunt_like_count);
+
+            // 
+            $.ajax({
+                url: "/content/toggle-like",
+                data: {
+                    feed_id: id,
+                    is_like: on,
+                },
+                method: "POST",
+
+                // processData: false, // 데이터를 쿼리스트링으로 변환하지 않음
+                // contentType: false,
+
+                success: function (data) {
+                    console.log("성공");
+                },
+                error: function (request, status, error) {
+                    console.log("에러");
+                },
+                complete: function () {
+                    console.log("ajax 완료");
+                }
+            }
+            )
         }
 
         function bookmark_click(element) {

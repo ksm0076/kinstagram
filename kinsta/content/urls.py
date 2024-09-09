@@ -11,4 +11,5 @@ urlpatterns = [
     path('profile', profile.as_view(), name='profile'),
     path('comment', upload_comment.as_view(), name='upload_comment'),
     path('delete-feed', DeleteFeed.as_view(), name='delete-feed'),
+    path('toggle-like', TogleLike.as_view()),
 ]
