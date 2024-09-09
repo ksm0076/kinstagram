@@ -122,8 +122,14 @@
                     <span class="material-symbols-outlined"> send </span>
                 </div>
                 <div>
+                    {% if feed.is_bookmarked %}
+                    <span id="bookmark" class="material-symbols-outlined"
+                        style="margin-right: -6px; font-variation-settings : 'FILL' 1;" feed_id={{feed.feed_id}} on=true
+                        onclick="bookmark_click(this)"> bookmark </span>
+                    {% else %}
                     <span id="bookmark" class="material-symbols-outlined" style="margin-right: -6px;"
-                        feed_id={{feed.feed_id}} onclick="bookmark_click(this)"> bookmark </span>
+                        feed_id={{feed.feed_id}} on=false onclick="bookmark_click(this)"> bookmark </span>
+                    {% endif %}
                 </div>
             </div>
             <div style="font-size:14px;  margin-left:4px; margin-right:4px;">
@@ -470,29 +476,28 @@
             // 좋아요 여부
             let on = $(element).attr("on");
 
-            // 좋아요 개수 (서버 거치지 않고 개수 변경 위함)      
+            // 좋아요 개수 (서버 거치지 않고 개수 변경)      
             let like_count_id = 'like_count_' + id;
             like_num = $("#" + like_count_id).text();
-            currunt_like_count = parseInt(like_num);
+            current_like_count = parseInt(like_num);
 
             if (on == "true") {
-                $(element).attr("on", "false")
+                $(element).attr("on", "false");
                 $(element).css({
                     "font-variation-settings": "'FILL' 0",
                     "color": "black",
                 })
-                currunt_like_count--;
+                current_like_count--;
             } else {
-                $(element).attr("on", "true")
+                $(element).attr("on", "true");
                 $(element).css({
                     "font-variation-settings": "'FILL' 1",
                     "color": "red",
                 })
-                currunt_like_count++;
+                current_like_count++;
             }
-
             // 좋아요 개수 변경 (서버 거치지 않음)
-            $("#" + like_count_id).text(currunt_like_count);
+            $("#" + like_count_id).text(current_like_count);
 
             // 
             $.ajax({
@@ -521,10 +526,42 @@
 
         function bookmark_click(element) {
             let id = $(element).attr("feed_id");
-            console.log(id);
-            $(element).css({
-                "font-variation-settings": "'FILL' 1",
-            })
+            let on = $(element).attr("on");
+
+            if (on == "true") {
+                $(element).attr("on", "false");
+                $(element).css({
+                    "font-variation-settings": "'FILL' 0",
+                })
+            } else {
+                $(element).attr("on", "true");
+                $(element).css({
+                    "font-variation-settings": "'FILL' 1",
+                })
+            }
+
+            $.ajax({
+                url: "/content/toggle-bookmark",
+                data: {
+                    feed_id: id,
+                    is_bookmark: on,
+                },
+                method: "POST",
+
+                // processData: false, // 데이터를 쿼리스트링으로 변환하지 않음
+                // contentType: false,
+
+                success: function (data) {
+                    console.log("성공");
+                },
+                error: function (request, status, error) {
+                    console.log("에러");
+                },
+                complete: function () {
+                    console.log("ajax 완료");
+                }
+            }
+            )
         }
     </script>
 

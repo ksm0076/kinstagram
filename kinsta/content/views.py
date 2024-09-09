@@ -57,6 +57,8 @@ class main(APIView):
             
             is_liked = like.objects.filter(feed_id = feed.id, email = login_email, is_like = True).exists()
             
+            is_bookmarked = bookmark.objects.filter(feed_id = feed.id, email = login_email, is_bookmark = True).exists()
+            
             feed_list.append(dict(
                 image = feed.image,
                 content = feed.content,
@@ -66,6 +68,7 @@ class main(APIView):
                 comment_list = comment_list,
                 like_count = like_count,
                 is_liked = is_liked,
+                is_bookmarked = is_bookmarked,
             ))
 
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
@@ -196,8 +199,7 @@ class TogleLike(APIView):
         email = requeset.session['email']
         nickname = requeset.session['nickname']
         
-        like_user = like.objects.filter(feed_id = feed_id, email = email).first()
-        
+        like_user = like.objects.filter(feed_id = feed_id, email = email).first()        
         
         # 좋아요 누른적이 없음
         if like_user is None:
@@ -214,7 +216,40 @@ class TogleLike(APIView):
             else:
                 like_user.is_like = True
                 
-            like_user.save()
+            like_user.save()                
+        
+        return Response(status=200)
+    
+class TogleBookmark(APIView):
+    def post(self, requeset):
+        feed_id = requeset.data.get('feed_id')
+        is_bookmark = requeset.data.get('is_bookmark')
+        
+        if is_bookmark == 'true':
+            is_bookmark = False
+        else:
+            is_bookmark = True
+        
+        email = requeset.session['email']
+        nickname = requeset.session['nickname']
+        
+        bookmark_user = bookmark.objects.filter(feed_id = feed_id, email = email).first()        
+        
+        # 북마크 누른적이 없음
+        if bookmark_user is None:
+            bookmark.objects.create(
+                feed_id = feed_id,
+                email = email,
+                nickname = nickname,
+                is_bookmark = is_bookmark
+            )
+        # 북마크 누른적이 있음
+        else:
+            if bookmark_user.is_bookmark:
+                bookmark_user.is_bookmark = False
+            else:
+                bookmark_user.is_bookmark = True
                 
+            bookmark_user.save()                
         
         return Response(status=200)
