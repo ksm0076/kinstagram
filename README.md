@@ -830,7 +830,21 @@ class main():
     ))
 
 ```
+* 좋아요 여부 확인하기
+```
+is_liked = like.objects.filter(feed_id = feed.id, email = login_email, is_like = True).exists()
+```
 
+* 좋아요 여부에 따라 피드의 하트 색칠하기
+```
+{% if feed.is_liked %}
+<span id="like" class="material-symbols-outlined"
+    style="font-variation-settings : 'FILL' 1;
+color: red;">favorite</span>
+{% else %}
+<span id="like" class="material-symbols-outlined">favorite</span>
+{% endif %}
+```
 
 
 ### 30. 북마크 기능

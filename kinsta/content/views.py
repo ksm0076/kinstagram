@@ -20,6 +20,18 @@ class test(APIView):
 class main(APIView):
     def get(self, request):
         print("main 접속")
+        
+        #
+        try:
+            login_email = request.session["email"]
+        except KeyError:
+            print("세션 비어있음")
+            return render(request, "user/login.html")
+
+        login_user = user.objects.filter(user_email=login_email).first()  # 유저 정보
+        print("유저 닉네임 :", login_user.user_nickname)
+        #
+        
         feed_object_list = Feed.objects.all().order_by("-id")  # select * from content_feed
         feed_list = []
         
@@ -31,9 +43,6 @@ class main(APIView):
             comment_object_list = comment.objects.filter(feed_id = feed.id)
             comment_list = []
             
-            like_object = like.objects.filter(feed_id = feed.id, is_like = True)
-            like_count = like_object.count()
-            
             for each_comment in comment_object_list:
                 comment_user = user.objects.filter(user_email = each_comment.email).first()
                 comment_list.append(dict(
@@ -42,6 +51,11 @@ class main(APIView):
                     profile_img = comment_user.profile_img
                 ))
             #
+                        
+            like_object = like.objects.filter(feed_id = feed.id, is_like = True)
+            like_count = like_object.count()
+            
+            is_liked = like.objects.filter(feed_id = feed.id, email = login_email, is_like = True).exists()
             
             feed_list.append(dict(
                 image = feed.image,
@@ -51,17 +65,8 @@ class main(APIView):
                 feed_id = feed.id,
                 comment_list = comment_list,
                 like_count = like_count,
+                is_liked = is_liked,
             ))
-        #
-        try:
-            login_email = request.session["email"]
-        except KeyError:
-            print("세션 비어있음")
-            return render(request, "user/login.html")
-
-        login_user = user.objects.filter(user_email=login_email).first()  # 유저 정보
-        print("유저 닉네임 :", login_user.user_nickname)
-        #
 
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(
