@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -8,8 +8,6 @@ from user.models import user
 from uuid import uuid4
 import os
 from kinsta.settings import MEDIA_ROOT
-
-
 
 # Create your views here.
 class test(APIView):
@@ -26,7 +24,7 @@ class main(APIView):
             login_email = request.session["email"]
         except KeyError:
             print("세션 비어있음")
-            return render(request, "user/login.html")
+            return redirect('login')
 
         login_user = user.objects.filter(user_email=login_email).first()  # 유저 정보
         print("유저 닉네임 :", login_user.user_nickname)
@@ -133,7 +131,7 @@ class profile(APIView):
             user_email = request.session["email"]
         except KeyError:
             print("세션 비어있음")
-            return render(request, "user/login.html")
+            return redirect("login")
 
         login_user = user.objects.filter(user_email=user_email).first()  # 유저 정보
         print("유저 닉네임 :", login_user.user_nickname)
@@ -149,7 +147,7 @@ class profile(APIView):
             email = request.session["email"]
         except:
             print("프로필 변경 오류 발생")
-            return render(request, "user/login.html")
+            return redirect("login")
             
         profile_img = request.FILES["profile_img"]
         print("변경될 이미지 :", profile_img)

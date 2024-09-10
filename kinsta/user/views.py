@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from .models import user
 from django.contrib.auth.hashers import make_password
@@ -40,7 +40,7 @@ class login(APIView):
     def get(self, request):        
         try:
             request.session["email"]
-            return render(request, "kinsta/main.html")
+            return redirect('main')
         except KeyError:
             print("세션 비어있음")
             return render(request, "user/login.html")
@@ -72,4 +72,4 @@ class logout(APIView):
         # 세션 삭제
         request.session.clear()
         print("세션 삭제")
-        return render(request, "user/login.html")
+        return redirect("login")
