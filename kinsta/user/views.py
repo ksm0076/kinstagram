@@ -37,8 +37,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 
 class login(APIView):
-    def get(self, request):
-        return render(request, "user/login.html")  # html 파일 위치
+    def get(self, request):        
+        try:
+            request.session["email"]
+            return render(request, "kinsta/main.html")
+        except KeyError:
+            print("세션 비어있음")
+            return render(request, "user/login.html")
 
     def post(self, request):
         user_email = request.data.get("user_email")

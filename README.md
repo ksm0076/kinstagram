@@ -847,7 +847,7 @@ color: red;">favorite</span>
 ```
 
 * 좋아요 누를 시 좋아요 개수, 아이콘 색칠 변화
-[커밋](https://github.com/ksm0076/kinstagram/commit/c1f15e86bfb22b7b37ea526208e59e25722e3df0)
+[커밋] (https://github.com/ksm0076/kinstagram/commit/c1f15e86bfb22b7b37ea526208e59e25722e3df0)
 
 * 좋아요 동작 DB 연동
 > content/views.py
