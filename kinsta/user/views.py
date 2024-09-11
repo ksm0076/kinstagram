@@ -86,7 +86,7 @@ from django.shortcuts import get_object_or_404
 from uuid import uuid4
 import os
 
-from content.models import Feed
+from content.models import Feed, bookmark
 from kinsta.settings import MEDIA_ROOT
 
 class Profile(APIView):
@@ -101,7 +101,7 @@ class Profile(APIView):
         login_user = user.objects.filter(user_email=user_email).first()  # 유저 정보
         print("유저 닉네임 :", login_user.user_nickname)
         #
-        feed_object_list = Feed.objects.filter(user_email=user_email)
+        feed_object_list = Feed.objects.filter(user_email=user_email).order_by("-id")
         feed_list = []
 
         for feed in feed_object_list:
@@ -110,13 +110,26 @@ class Profile(APIView):
                     feed_id=feed.id,
                     feed_img=feed.image,
                 )
+            )            
+        
+        
+        bookmark_object_list = bookmark.objects.filter(email=user_email, is_bookmark = 1).order_by("-id")
+        bookmark_list = []
+        
+        for book in bookmark_object_list:
+            bookmark_item = Feed.objects.filter(id = book.feed_id).first()
+            bookmark_list.append(
+                dict(
+                    bookmark_feed_id = bookmark_item.id,
+                    feed_img = bookmark_item.image,
+                )
             )
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
         return render(
             request,
             "user/profile.html",
             context=dict(
-                user=login_user, feeds=feed_list, feed_num=len(feed_object_list)
+                user=login_user, feeds=feed_list, feed_num=len(feed_object_list), bookmarks = bookmark_list
             ),
         )
 
@@ -147,4 +160,4 @@ class Profile(APIView):
         u.profile_img = uuid_name
         u.save()
 
-        return render(request, "content/profile.html")
+        return render(request, "user/profile.html")

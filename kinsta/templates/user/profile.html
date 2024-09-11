@@ -65,7 +65,7 @@
                         width: 30px;
                         height: 30px;
                         outline: 1px solid black;
-                        object-fit: cover;" onclick="location.href = '/content/profile'">
+                        object-fit: cover;" onclick="location.href = '/user/profile'">
                 </li>
             </div>
         </ul>
@@ -105,9 +105,20 @@
             <hr style="width: 90%; border: 1px solid rgb(219, 219, 219); opacity: 1;">
             <div style="display:flex; flex-direction: column; align-items: center;">
                 <div style="display:flex; margin-bottom: 10px;">
-                    <div style="cursor: pointer;"><b>게시물</b></div>
-                    <div style="margin-left: 60px; cursor: pointer;">저장됨</div>
-                    <div style="margin-left: 60px; cursor: pointer;">태그됨</div>
+                    <!-- 내가 올린 게시물 -->
+                    <div id="feed_button" style="cursor: pointer; display: flex; align-items: center; font-weight: bold;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">grid_on</span>
+                        게시물
+                    </div>
+                    <!-- 북마크 한 게시물 -->
+                    <div id="bookmark_button" style="margin-left: 60px; cursor: pointer; display: flex; align-items: center;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">bookmark</span>
+                        저장됨
+                    </div>
+                    <!-- 태그 -->
+                    <div style="margin-left: 60px; cursor: pointer; display: flex; align-items: center;">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">account_box</span>태그됨
+                    </div>
                 </div>
                 <div id="feed_list_section" class="feed_list" style="display:block; justify-content: center;">
                     {% if feeds %}
@@ -117,6 +128,16 @@
                     {%endfor%}
                     {% else %}
                     <br>내가 올린 게시물이 여기에 표시됩니다.
+                    {% endif %}
+                </div>
+                <div id="bookmark_list_section" class="feed_list" style="display:none; justify-content: center;">
+                    {% if bookmarks %}
+                    {% for bookmark in bookmarks%}
+                    <img src="{% get_media_prefix %}{{bookmark.feed_img}}"
+                        style="width: 200px; height: 200px; margin-bottom: 5px; cursor: pointer;">
+                    {%endfor%}
+                    {% else %}
+                    <br>내가 북마크한 게시물이 여기에 표시됩니다.
                     {% endif %}
                 </div>
             </div>
@@ -300,9 +321,9 @@
 
             fd.append('profile_img', files[0]);
 
-            /// /content/profile url로 접속하면 실행되는 함수로로 넘기기(view)
+            /// /user/profile url로 접속하면 실행되는 함수로로 넘기기(view)
             $.ajax({
-                url: "/content/profile",
+                url: "/user/profile",
                 data: fd,
                 method: "POST",
 
@@ -320,6 +341,38 @@
                 }
             }
             )
+        })
+
+        // '게시글' 눌렀을 때
+        $('#feed_button').click(function(){
+            $('#feed_list_section').css({
+                display: 'block',
+            })
+            $('#bookmark_list_section').css({
+                display: 'none',
+            })
+            $('#feed_button').css({
+                'font-weight' : 'bold',
+            })
+            $('#bookmark_button').css({
+                'font-weight' : 'normal',
+            })
+        })
+
+        // '저장됨(북마크)' 눌렀을 때
+        $('#bookmark_button').click(function(){
+            $('#feed_list_section').css({
+                display: 'none',
+            })
+            $('#bookmark_list_section').css({
+                display: 'block',
+            })            
+            $('#feed_button').css({
+                'font-weight' : 'normal',
+            })
+            $('#bookmark_button').css({
+                'font-weight' : 'bold',
+            })
         })
 
     </script>
