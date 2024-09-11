@@ -20,11 +20,17 @@
     <!-- Load css -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main_style.css' %}?after">
+
+    <style>
+        .feed_list img:hover {
+            filter: brightness(65%);
+        }
+    </style>
 </head>
 
-<body style="display: flex; justify-content: center;">
+<body style="display: flex;">
     <!-- 네비바 -->
-    <div class="k_nav" style="position:fixed; margin-right: 15px; box-sizing:content-box;">
+    <div class="k_nav" style="position:fixed; box-sizing:content-box;">
         <ul class="nav flex-column">
             <div class="container-fluid">
                 <!-- 로고 -->
@@ -64,42 +70,58 @@
             </div>
         </ul>
     </div>
-    <div style="display:flex; flex-direction: column; align-items: center; margin-top: 40px; margin-left: 40px;">
-        <div class="profile_seciotn" style="width:100%; justify-content: center; display: flex;">
-            <!-- 프로필 사진 변경 -->
-            <img id="upload_profile" src="{% get_media_prefix %}{{user.profile_img}}" style="border-radius: 50%;
+    <div style="min-width: 226px; height: 100vh;"></div>
+    <!-- 우측 -->
+    <div style="width: 100%; display: flex; justify-content: center; padding-left:15px;">
+        <div style="display:flex; flex-direction: column; align-items: center; margin-top: 40px;">
+            <div>
+                <div class="profile_seciotn" style="width:100%; justify-content: center; display: flex;">
+                    <!-- 프로필 사진 변경 -->
+                    <img id="upload_profile" src="{% get_media_prefix %}{{user.profile_img}}" style="border-radius: 50%;
                         width: 150px;
                         height: 150px;
                         object-fit: cover;
                         cursor: pointer;">
-            <section style="margin-left: 50px;">
-                <div style="margin-bottom: 20px; display:flex; justify-content: space-between; align-items: center;;">
-                    <b>{{user.user_nickname}}</b>
-                    <span class="material-symbols-outlined" style="font-size: 26px;">
-                        settings
-                    </span>
+                    <section style="margin-left: 20px;">
+                        <div
+                            style="margin-bottom: 20px; display:flex; justify-content: space-between; align-items: center;;">
+                            <b>{{user.user_nickname}}</b>
+                            <span class="material-symbols-outlined" style="font-size: 26px;">
+                                settings
+                            </span>
+                        </div>
+                        <div style="display:flex; justify-content: space-between; margin-bottom: 20px;">
+                            <div style="margin-right: 40px">게시물 <b>{{feed_num}}</b></div>
+                            <div style="margin-right: 40px">팔로워 <b>1</b></div>
+                            <div>팔로우 <b>1</b></div>
+                        </div>
+                        <div>
+                            <b>{{user.user_name}}</b>
+                        </div>
+                    </section>
                 </div>
-                <div style="display:flex; justify-content: space-between; margin-bottom: 20px;">
-                    <div style="margin-right: 40px">게시물 <b>1</b></div>
-                    <div style="margin-right: 40px">팔로워 <b>1</b></div>
-                    <div>팔로우 <b>1</b></div>
+                <div style="height:200px;"></div>
+            </div>
+            <hr style="width: 90%; border: 1px solid rgb(219, 219, 219); opacity: 1;">
+            <div style="display:flex; flex-direction: column; align-items: center;">
+                <div style="display:flex; justify-content: center; margin-bottom: 10px;">
+                    <div style="cursor: pointer;"><b>게시물</b></div>
+                    <div style="margin-left: 60px; cursor: pointer;">저장됨</div>
+                    <div style="margin-left: 60px; cursor: pointer;">태그됨</div>
                 </div>
-                <div>
-                    <b>{{user.user_name}}</b>
+                <div id="feed_list_section" class="feed_list" style="display:block; justify-content: center;">
+                    {% if feeds %}
+                    {% for feed in feeds%}
+                    <img src="{% get_media_prefix %}{{feed.feed_img}}"
+                        style="width: 200px; height: 200px; margin-bottom: 5px; cursor: pointer;">
+                    {%endfor%}
+                    {% else %}
+                    <br>내가 올린 게시물이 여기에 표시됩니다.
+                    {% endif %}
                 </div>
-            </section>
-        </div>
-        <div style="display:flex; justify-content: center;">
-            <hr style="width: 50%;">
-        </div>
-        <hr style="width: 90%; border: 1px solid rgb(219, 219, 219); opacity: 1;">
-        <div style="display:flex;">
-            <div>게시물</div>
-            <div style="margin-left: 60px;">저장됨</div>
-            <div style="margin-left: 60px;">태그됨</div>
+            </div>
         </div>
     </div>
-
     <!-- 게시물 추가 기능 -->
     <div class="modal_overlay">
         <div class="modal_overlay_top">

@@ -115,7 +115,8 @@ class DeleteFeed(APIView):
     def post(self, request):
         feed_id = request.data.get('feed_id')
         try:
-            record_list = Feed.objects.filter(id = feed_id)
+            print("피드 삭제 " + feed_id)
+            record_list = Feed.objects.filter(id = feed_id).first()
             record_list.delete()
         except:
             print("삭제 에러 발생")
@@ -136,9 +137,16 @@ class profile(APIView):
         login_user = user.objects.filter(user_email=user_email).first()  # 유저 정보
         print("유저 닉네임 :", login_user.user_nickname)
         #
-
+        feed_object_list = Feed.objects.filter(user_email = user_email)
+        feed_list = []
+        
+        for feed in feed_object_list:            
+            feed_list.append(dict(
+                feed_id = feed.id,
+                feed_img = feed.image,
+            ))
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
-        return render(request, "content/profile.html", context=dict(user=login_user))
+        return render(request, "content/profile.html", context=dict(user=login_user, feeds=feed_list, feed_num = len(feed_object_list)))
 
     # 프로필 변경
     def post(self, request):        
