@@ -102,19 +102,6 @@ class Profile(APIView):
         print("유저 닉네임 :", login_user.user_nickname)
         #
         feed_object_list = Feed.objects.filter(user_email=user_email).order_by("-id")
-        feed_list = []
-
-        for feed in feed_object_list:
-            feed_list.append(
-                dict(
-                    feed_id=feed.id,
-                    feed_img=feed.image,
-                )
-            )            
-        
-        
-        
-        
         
         bookmark_id_list = list(bookmark.objects.filter(email=user_email, is_bookmark = 1).values_list('feed_id', flat=True))
         bookmark_id_list = sorted(bookmark_id_list, reverse=True)
@@ -134,7 +121,7 @@ class Profile(APIView):
             request,
             "user/profile.html",
             context=dict(
-                user=login_user, feeds=feed_list, feed_num=len(feed_object_list), bookmarks = bookmark_list
+                user=login_user, feeds=feed_object_list, feed_num=len(feed_object_list), bookmarks = bookmark_list
             ),
         )
 

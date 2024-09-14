@@ -123,7 +123,7 @@
                 <div id="feed_list_section" class="feed_list" style="display:block; justify-content: center;">
                     {% if feeds %}
                     {% for feed in feeds%}
-                    <img src="{% get_media_prefix %}{{feed.feed_img}}"
+                    <img src="{% get_media_prefix %}{{feed.image}}"
                         style="width: 200px; height: 200px; margin-bottom: 5px; cursor: pointer;">
                     {%endfor%}
                     {% else %}

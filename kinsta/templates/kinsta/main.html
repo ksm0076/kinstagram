@@ -155,7 +155,7 @@
                         <b>{{comment.nickname}}</b> {{comment.content}}
                     </div>
                     {% endfor %}
-                    <div id="feed_comment_{{ feed.feed_id}}" style="cursor: pointer;">
+                    <div id="feed_comment_{{ feed.feed_id}}" style="cursor: pointer;" onclick="show_comment(this)">
                         댓글 {{ feed.comment_list|length }}개 모두 보기
                     </div>
                 </div>
@@ -562,6 +562,10 @@
                 }
             }
             )
+
+            function show_comment(element){
+                alert("Hi");
+            }
         }
     </script>
 
