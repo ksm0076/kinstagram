@@ -82,7 +82,7 @@
                         height: 150px;
                         object-fit: cover;
                         cursor: pointer;">
-                    <section style="margin-left: 20px;">
+                    <section style="margin-left: 90px;">
                         <div
                             style="margin-bottom: 20px; display:flex; justify-content: space-between; align-items: center;;">
                             <b>{{user.user_nickname}}</b>
@@ -111,12 +111,12 @@
                         게시물
                     </div>
                     <!-- 북마크 한 게시물 -->
-                    <div id="bookmark_button" style="margin-left: 60px; cursor: pointer; display: flex; align-items: center;">
+                    <div id="bookmark_button" style="margin-left: 60px; cursor: pointer; display: flex; align-items: center; color: rgb(103, 103, 103)">
                         <span class="material-symbols-outlined" style="font-size: 20px;">bookmark</span>
                         저장됨
                     </div>
                     <!-- 태그 -->
-                    <div style="margin-left: 60px; cursor: pointer; display: flex; align-items: center;">
+                    <div style="margin-left: 60px; cursor: pointer; display: flex; align-items: center; color: rgb(103, 103, 103)">
                         <span class="material-symbols-outlined" style="font-size: 20px;">account_box</span>태그됨
                     </div>
                 </div>
@@ -353,9 +353,11 @@
             })
             $('#feed_button').css({
                 'font-weight' : 'bold',
+                'color' : 'black'
             })
             $('#bookmark_button').css({
                 'font-weight' : 'normal',
+                'color' : 'rgb(103, 103, 103)'
             })
         })
 
@@ -369,9 +371,11 @@
             })            
             $('#feed_button').css({
                 'font-weight' : 'normal',
+                'color' : 'rgb(103, 103, 103)'
             })
             $('#bookmark_button').css({
                 'font-weight' : 'bold',
+                'color' : 'black'
             })
         })
 

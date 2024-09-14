@@ -155,7 +155,7 @@
                         <b>{{comment.nickname}}</b> {{comment.content}}
                     </div>
                     {% endfor %}
-                    <div style="cursor: pointer;">
+                    <div id="feed_comment_{{ feed.feed_id}}" style="cursor: pointer;">
                         댓글 {{ feed.comment_list|length }}개 모두 보기
                     </div>
                 </div>

@@ -113,15 +113,20 @@ class Profile(APIView):
             )            
         
         
-        bookmark_object_list = bookmark.objects.filter(email=user_email, is_bookmark = 1).order_by("-id")
+        
+        
+        
+        bookmark_id_list = list(bookmark.objects.filter(email=user_email, is_bookmark = 1).values_list('feed_id', flat=True))
+        bookmark_id_list = sorted(bookmark_id_list, reverse=True)
+        
         bookmark_list = []
         
-        for book in bookmark_object_list:
-            bookmark_item = Feed.objects.filter(id = book.feed_id).first()
+        for feed_id in bookmark_id_list:
+            bookmark_feed = Feed.objects.filter(id = feed_id).first()
             bookmark_list.append(
                 dict(
-                    bookmark_feed_id = bookmark_item.id,
-                    feed_img = bookmark_item.image,
+                    bookmark_feed_id = feed_id,
+                    feed_img = bookmark_feed.image,
                 )
             )
         # 사전 형식으로 전달 { key(템플릿으로 전달할 이름) : value }
