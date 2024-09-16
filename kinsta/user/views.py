@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from .models import user
 from django.contrib.auth.hashers import make_password
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 # Create your views here.
@@ -90,16 +90,18 @@ from content.models import Feed, bookmark
 from kinsta.settings import MEDIA_ROOT
 
 class Profile(APIView):
-    def get(self, request):  # get 요청이 왔을 때
+    def get(self, request, nickname = None):  # get 요청이 왔을 때
         print("profile 접속")
         try:
-            user_email = request.session["email"]
+            login_email = request.session["email"]
         except KeyError:
             print("세션 비어있음")
             return redirect("login")
-
-        login_user = user.objects.filter(user_email=user_email).first()  # 유저 정보
-        print("유저 닉네임 :", login_user.user_nickname)
+        
+        login_user = user.objects.filter(user_email=login_email).first()
+        profile_user = user.objects.filter(user_nickname=nickname).first()  # 유저 정보
+        print("유저 닉네임 :", profile_user.user_nickname)
+        user_email = profile_user.user_email
         #
         feed_object_list = Feed.objects.filter(user_email=user_email).order_by("-id")
         
@@ -121,12 +123,13 @@ class Profile(APIView):
             request,
             "user/profile.html",
             context=dict(
-                user=login_user, feeds=feed_object_list, feed_num=len(feed_object_list), bookmarks = bookmark_list
+                user=profile_user, feeds=feed_object_list, feed_num=len(feed_object_list),
+                bookmarks = bookmark_list, login_user = login_user
             ),
         )
 
     # 프로필 변경
-    def post(self, request):
+    def post(self, request, nickname = None):
         try:
             print("사용자 접속 확인")
             email = request.session["email"]
@@ -151,5 +154,5 @@ class Profile(APIView):
         u = get_object_or_404(user, user_email=email)
         u.profile_img = uuid_name
         u.save()
-
-        return render(request, "user/profile.html")
+        
+        return HttpResponse("Post 요청 완료")
