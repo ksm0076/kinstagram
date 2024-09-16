@@ -321,9 +321,10 @@
 
             fd.append('profile_img', files[0]);
 
+            login_user_nickname = "{{login_user}}";
             /// /user/profile url로 접속하면 실행되는 함수로로 넘기기(view)
             $.ajax({
-                url: "/user/profile/{{login_user}}",
+                url: "/user/profile/" + login_user_nickname,
                 data: fd,
                 method: "POST",
 
